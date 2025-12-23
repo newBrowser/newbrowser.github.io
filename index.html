@@ -4,596 +4,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Multi-Window Browser</title>
+    <title>Professional Multi-Streamer</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        primary: {
-                            50: '#eff6ff',
-                            100: '#dbeafe',
-                            200: '#bfdbfe',
-                            300: '#93c5fd',
-                            400: '#60a5fa',
-                            500: '#3b82f6',
-                            600: '#2563eb',
-                            700: '#1d4ed8',
-                            800: '#1e40af',
-                            900: '#1e3a8a',
-                        },
-                        darkBg: '#111827',
-                        darkText: '#f9fafb',
-                        darkCard: '#1f2937',
-                        darkBorder: '#374151'
-                    },
-                    boxShadow: {
-                        'input-focus': '0 0 0 3px rgba(59, 130, 246, 0.3)',
-                        'input-focus-dark': '0 0 0 3px rgba(147, 197, 253, 0.3)'
-                    }
-                }
-            }
-        }
-    </script>
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            min-height: 100vh;
+        .iframe-wrapper {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            background: #1a1a1a;
+            border-radius: 8px;
+            overflow: hidden;
         }
         
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
+        .iframe-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
         }
         
-        .window-container {
-            transition: all 0.2s ease;
+        .loading-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: #3b82f6;
+            transition: width 0.3s;
         }
         
-        .window-container:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-        
-        .dark .window-container:hover {
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
-        }
-        
-        iframe {
-            transition: opacity 0.3s ease;
-        }
-        
-        .loading-iframe {
-            opacity: 0.5;
-        }
-        
-        .tab-button.active {
-            background-color: #3b82f6;
-            color: white;
-        }
-        
-        .dark .tab-button.active {
-            background-color: #1e40af;
-        }
-        
-        .progress-bar {
-            height: 4px;
-            background-color: #3b82f6;
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-        
-        .dark .progress-bar {
-            background-color: #60a5fa;
-        }
-        /* Custom scrollbar */
-        
-         ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        
-         ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-        
-         ::-webkit-scrollbar-thumb {
-            background: #c1c1c1;
-            border-radius: 4px;
-        }
-        
-        .dark ::-webkit-scrollbar-track {
-            background: #374151;
-        }
-        
-        .dark ::-webkit-scrollbar-thumb {
-            background: #4b5563;
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 15px;
         }
     </style>
 </head>
 
-<body class="bg-gray-50 dark:bg-darkBg text-gray-800 dark:text-darkText transition-colors duration-200">
-    <div class="container">
-        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+<body class="bg-gray-900 text-gray-100 min-h-screen p-4">
+
+    <div class="max-w-7xl mx-auto">
+        <div class="flex flex-wrap items-center justify-between mb-6 bg-gray-800 p-4 rounded-lg border border-gray-700 shadow-lg">
             <div>
-                <h1 class="text-3xl font-bold flex items-center gap-2">
-                    <i class="fas fa-window-restore"></i>
-                    <span>Multi-Window Web Browser</span>
+                <h1 class="text-xl font-bold text-white flex items-center gap-2">
+                    <span class="flex h-3 w-3 rounded-full bg-green-500"></span> Stable Multi-Controller
                 </h1>
-                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Browse multiple sites simultaneously</p>
+                <p id="stats" class="text-xs text-gray-400 mt-1">Initializing system...</p>
             </div>
-            <div class="flex gap-2">
-                <button id="dark-mode-toggle" class="bg-gray-200 dark:bg-gray-700 px-4 py-2 rounded-lg shadow text-sm transition hover:bg-gray-300 dark:hover:bg-gray-600 flex items-center gap-2">
-                    <i class="fas fa-moon dark:fa-sun"></i>
-                    <span>Toggle Theme</span>
+
+            <div class="flex gap-3">
+                <button onclick="refreshAll()" class="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded text-sm font-medium transition">
+                    Refresh All
                 </button>
-                <button id="clear-all-button" class="bg-gray-200 dark:bg-gray-700 px-4 py-2 rounded-lg shadow text-sm transition hover:bg-gray-300 dark:hover:bg-gray-600 flex items-center gap-2">
-                    <i class="fas fa-trash"></i>
-                    <span>Clear All</span>
+                <button onclick="toggleLayout()" class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded text-sm font-medium transition">
+                    Switch Layout
                 </button>
             </div>
         </div>
 
-        <form id="search-form" class="flex flex-col sm:flex-row gap-3 items-start sm:items-end">
-            <div class="w-full">
-                <label for="search-input" class="block text-sm font-medium mb-1">URL or Search Term</label>
-                <div class="relative flex items-center">
-                    <input type="text" id="search-input" placeholder="https://example.com or search term" class="w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-darkCard dark:border-darkBorder dark:placeholder-gray-400">
-                    <button type="button" id="clear-search" class="absolute right-3 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-            </div>
-
-            <div class="w-32">
-                <label for="window-count-input" class="block text-sm font-medium mb-1">Window Count</label>
-                <input type="number" id="window-count-input" value="4" min="1" max="20" class="w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-darkCard dark:border-darkBorder">
-            </div>
-
-            <button id="open-windows-button" type="button" class="bg-primary-600 hover:bg-primary-700 text-white px-5 py-3 rounded-lg shadow transition flex items-center gap-2 disabled:bg-gray-400 dark:disabled:bg-gray-600 disabled:cursor-not-allowed h-[42px]">
-                <i class="fas fa-external-link-alt"></i>
-                <span>Open Windows</span>
-            </button>
-        </form>
-
-        <div id="progress-container" class="mt-2 hidden">
-            <div id="progress-bar" class="progress-bar"></div>
+        <div id="display-container" class="grid-layout">
         </div>
-
-        <div id="message-box" class="mt-4 p-4 hidden rounded-lg text-center font-medium"></div>
-
-        <div id="tabs-container" class="flex gap-2 mt-6 overflow-x-auto py-2 hidden">
-            <!-- Tabs will be added here dynamically -->
-        </div>
-
-        <div class="window-grid grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 mt-4" id="window-grid"></div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // DOM Elements
-            const searchInput = document.getElementById('search-input');
-            const openWindowsButton = document.getElementById('open-windows-button');
-            const windowCountInput = document.getElementById('window-count-input');
-            const windowGrid = document.getElementById('window-grid');
-            const messageBox = document.getElementById('message-box');
-            const darkModeToggle = document.getElementById('dark-mode-toggle');
-            const clearSearchButton = document.getElementById('clear-search');
-            const clearAllButton = document.getElementById('clear-all-button');
-            const progressContainer = document.getElementById('progress-container');
-            const progressBar = document.getElementById('progress-bar');
-            const tabsContainer = document.getElementById('tabs-container');
-            const searchForm = document.getElementById('search-form');
+        /* --- POWERFUL CONFIGURATION --- */
+        const APP_CONFIG = {
+            targetUrl: "https://www.effectivegatecpm.com/x2vffrjk?key=48ff1dfdc62d6130662ac4e7a403f394",
+            tabCount: 1, // Set this to 5, 10, or 20
+            autoRefreshMins: 1, // Automatically refreshes tabs every 15 mins to stay stable
+            isGridView: true // Start in Grid view or Single Tab view
+        };
 
-            // State
-            let windowsOpen = false;
-            let currentWindows = [];
-            let activeTabIndex = 0;
-            let loadingComplete = false;
+        let windows = [];
 
-            // Initialize
-            function init() {
-                validateInput();
-                loadThemePreference();
-                loadSavedWindows();
-                setupEventListeners();
+        function init() {
+            const container = document.getElementById('display-container');
+            const stats = document.getElementById('stats');
+
+            container.innerHTML = '';
+            stats.innerText = `System Active: ${APP_CONFIG.tabCount} Instances | Auto-Refresh: ${APP_CONFIG.autoRefreshMins}m`;
+
+            for (let i = 0; i < APP_CONFIG.tabCount; i++) {
+                createWindow(i);
             }
 
-            // Event Listeners
-            function setupEventListeners() {
-                searchInput.addEventListener('input', validateInput);
-                windowCountInput.addEventListener('input', validateInput);
-                openWindowsButton.addEventListener('click', toggleWindows);
-                darkModeToggle.addEventListener('click', toggleDarkMode);
-                clearSearchButton.addEventListener('click', clearSearch);
-                clearAllButton.addEventListener('click', clearAllWindows);
-                searchForm.addEventListener('submit', handleFormSubmit);
+            // Set up Auto-Refresh Interval
+            setInterval(refreshAll, APP_CONFIG.autoRefreshMins * 60 * 1000);
+        }
 
-                // Keyboard shortcuts
-                document.addEventListener('keydown', (e) => {
-                    if (e.ctrlKey && e.key === 'k') {
-                        e.preventDefault();
-                        searchInput.focus();
-                    }
-                });
-            }
+        function createWindow(index) {
+            const container = document.getElementById('display-container');
 
-            // Form handling
-            function handleFormSubmit(e) {
-                e.preventDefault();
-                if (!openWindowsButton.disabled) {
-                    toggleWindows();
-                }
-            }
+            const wrapper = document.createElement('div');
+            wrapper.className = "iframe-wrapper border border-gray-700 shadow-md";
+            wrapper.id = `wrapper-${index}`;
 
-            // Input validation
-            function validateInput() {
-                const inputValue = searchInput.value.trim();
-                const windowCount = parseInt(windowCountInput.value);
+            const loader = document.createElement('div');
+            loader.className = "loading-bar";
+            loader.id = `loader-${index}`;
 
-                // Validate window count
-                if (windowCount < 1) windowCountInput.value = 1;
-                if (windowCount > 200) windowCountInput.value = 200;
+            const iframe = document.createElement('iframe');
+            iframe.src = APP_CONFIG.targetUrl;
+            iframe.loading = "lazy";
 
-                openWindowsButton.disabled = !(inputValue && windowCount > 0);
-            }
-
-            // Theme management
-            function loadThemePreference() {
-                const savedTheme = localStorage.getItem('theme') ||
-                    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-                document.documentElement.classList.toggle('dark', savedTheme === 'dark');
-                updateThemeIcon();
-            }
-
-            function toggleDarkMode() {
-                const root = document.documentElement;
-                const isDark = root.classList.toggle('dark');
-                localStorage.setItem('theme', isDark ? 'dark' : 'light');
-                updateThemeIcon();
-            }
-
-            function updateThemeIcon() {
-                const isDark = document.documentElement.classList.contains('dark');
-                darkModeToggle.innerHTML = isDark ?
-                    '<i class="fas fa-sun"></i><span>Toggle Theme</span>' :
-                    '<i class="fas fa-moon"></i><span>Toggle Theme</span>';
-            }
-
-            // Window management
-            function toggleWindows() {
-                windowsOpen ? closeAllWindows() : openMultipleWindows();
-            }
-
-            function openMultipleWindows() {
-                const searchTerm = searchInput.value.trim();
-                const numWindows = parseInt(windowCountInput.value);
-
-                if (!searchTerm || numWindows <= 0 || windowsOpen) return;
-
-                // Clear previous windows if any
-                if (currentWindows.length > 0) {
-                    closeAllWindows();
-                }
-
-                windowsOpen = true;
-                updateButtonState();
-                showProgress();
-
-                let loadedCount = 0;
-                currentWindows = [];
-                tabsContainer.innerHTML = '';
-                tabsContainer.classList.remove('hidden');
-
-                for (let i = 0; i < numWindows; i++) {
-                    const url = formatUrl(searchTerm, i, numWindows);
-                    const windowId = `window-${Date.now()}-${i}`;
-
-                    // Create tab
-                    const tab = createTab(i, url);
-                    tabsContainer.appendChild(tab);
-
-                    // Create window container
-                    const windowContainer = createWindowContainer(windowId);
-
-                    // Create iframe
-                    const iframe = createIframe(url, windowId, () => {
-                        loadedCount++;
-                        updateProgress(loadedCount, numWindows);
-
-                        if (loadedCount === numWindows) {
-                            loadingComplete = true;
-                            showMessage(`${numWindows} windows loaded successfully!`, 'success');
-                            hideProgress();
-                            saveWindows();
-                        }
-                    });
-
-                    windowContainer.appendChild(iframe);
-                    windowGrid.appendChild(windowContainer);
-
-                    // Save window reference
-                    currentWindows.push({
-                        id: windowId,
-                        url,
-                        container: windowContainer,
-                        iframe,
-                        tab
-                    });
-                }
-
-                // Activate first tab by default
-                if (currentWindows.length > 0) {
-                    activateTab(0);
-                }
-            }
-
-            function formatUrl(searchTerm, index, total) {
-                if (searchTerm.startsWith('http')) {
-                    return searchTerm;
-                }
-
-                // For search terms, we can add some variety if multiple windows
-                if (total > 1) {
-                    const variations = [
-                        `https://www.google.com/search?q=${encodeURIComponent(searchTerm)}&start=${index*10}`,
-                        `https://www.bing.com/search?q=${encodeURIComponent(searchTerm)}&first=${index*10+1}`,
-                        `https://duckduckgo.com/?q=${encodeURIComponent(searchTerm)}&s=${index*30}`,
-                        `https://search.yahoo.com/search?p=${encodeURIComponent(searchTerm)}&b=${index*10+1}`
-                    ];
-                    return variations[index % variations.length];
-                }
-
-                return `https://www.google.com/search?q=${encodeURIComponent(searchTerm)}`;
-            }
-
-            function createTab(index, url) {
-                const tab = document.createElement('button');
-                tab.className = 'tab-button px-4 py-2 rounded-lg text-sm whitespace-nowrap flex items-center gap-2 bg-gray-200 dark:bg-gray-700';
-                tab.dataset.index = index;
-
-                const domain = new URL(url).hostname.replace('www.', '');
-                const icon = getFavicon(url);
-
-                tab.innerHTML = `
-                    ${icon}
-                    <span class="truncate max-w-[120px]">${domain}</span>
-                    <i class="fas fa-times ml-1 opacity-0 group-hover:opacity-70 hover:opacity-100" data-action="close"></i>
-                `;
-
-                tab.addEventListener('click', (e) => {
-                    if (e.target.dataset.action === 'close') {
-                        e.stopPropagation();
-                        closeWindow(index);
-                    } else {
-                        activateTab(index);
-                    }
-                });
-
-                return tab;
-            }
-
-            function getFavicon(url) {
-                const domain = new URL(url).hostname;
-                return `<img src="https://www.google.com/s2/favicons?domain=${domain}" alt="favicon" class="w-4 h-4">`;
-            }
-
-            function createWindowContainer(id) {
-                const container = document.createElement('div');
-                container.id = id;
-                container.className = 'window-container border rounded-lg p-2 bg-white dark:bg-darkCard dark:border-darkBorder shadow';
-                return container;
-            }
-
-            function createIframe(url, id, onLoadCallback) {
-                const iframe = document.createElement('iframe');
-                iframe.src = url;
-                iframe.id = `iframe-${id}`;
-                iframe.className = 'w-full h-[500px] rounded-lg border-0 loading-iframe';
-                iframe.sandbox = 'allow-same-origin allow-scripts allow-popups allow-forms';
-                iframe.referrerPolicy = 'strict-origin-when-cross-origin';
-
-                iframe.onload = () => {
-                    iframe.classList.remove('loading-iframe');
-                    onLoadCallback();
-                };
-
-                iframe.onerror = () => {
-                    showMessage(`Failed to load window ${id}. Trying again...`, 'error');
-                    iframe.src = iframe.src; // Retry
-                };
-
-                return iframe;
-            }
-
-            function activateTab(index) {
-                // Validate index
-                if (index < 0 || index >= currentWindows.length) return;
-
-                // Update active tab
-                document.querySelectorAll('.tab-button').forEach((tab, i) => {
-                    tab.classList.toggle('active', i === index);
-                });
-
-                // Show/hide windows
-                currentWindows.forEach((win, i) => {
-                    win.container.classList.toggle('hidden', i !== index);
-                });
-
-                activeTabIndex = index;
-
-                // Bring active window into view
-                if (currentWindows[index]) {
-                    currentWindows[index].container.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'nearest'
-                    });
-                }
-            }
-
-            function closeWindow(index) {
-                if (index < 0 || index >= currentWindows.length) return;
-
-                const windowToClose = currentWindows[index];
-
-                // Remove from DOM
-                windowToClose.container.remove();
-                windowToClose.tab.remove();
-
-                // Remove from array
-                currentWindows.splice(index, 1);
-
-                // Update tabs
-                currentWindows.forEach((win, i) => {
-                    win.tab.dataset.index = i;
-                });
-
-                // Update state
-                if (currentWindows.length === 0) {
-                    windowsOpen = false;
-                    updateButtonState();
-                    tabsContainer.classList.add('hidden');
-                    showMessage('All windows closed.', 'info');
-                    saveWindows();
-                    return;
-                }
-
-                // Activate another tab if needed
-                if (activeTabIndex === index) {
-                    activateTab(Math.min(index, currentWindows.length - 1));
-                } else if (activeTabIndex > index) {
-                    activeTabIndex--;
-                }
-
-                showMessage('Window closed.', 'info');
-                saveWindows();
-            }
-
-            function closeAllWindows() {
-                if (!windowsOpen) return;
-
-                currentWindows.forEach(win => {
-                    win.container.remove();
-                    win.tab.remove();
-                });
-
-                currentWindows = [];
-                windowsOpen = false;
-                activeTabIndex = 0;
-                tabsContainer.classList.add('hidden');
-                updateButtonState();
-                showMessage('All windows closed.', 'info');
-                saveWindows();
-            }
-
-            function clearAllWindows() {
-                if (currentWindows.length > 0) {
-                    if (confirm('Are you sure you want to close all windows?')) {
-                        closeAllWindows();
-                    }
-                } else {
-                    showMessage('No windows to close.', 'info');
-                }
-            }
-
-            function updateButtonState() {
-                if (windowsOpen) {
-                    openWindowsButton.innerHTML = '<i class="fas fa-times"></i><span>Close Windows</span>';
-                    openWindowsButton.classList.remove('bg-primary-600', 'hover:bg-primary-700');
-                    openWindowsButton.classList.add('bg-red-600', 'hover:bg-red-700');
-                } else {
-                    openWindowsButton.innerHTML = '<i class="fas fa-external-link-alt"></i><span>Open Windows</span>';
-                    openWindowsButton.classList.add('bg-primary-600', 'hover:bg-primary-700');
-                    openWindowsButton.classList.remove('bg-red-600', 'hover:bg-red-700');
-                }
-            }
-
-            // Progress tracking
-            function showProgress() {
-                progressContainer.classList.remove('hidden');
-                progressBar.style.width = '0%';
-                loadingComplete = false;
-            }
-
-            function updateProgress(loaded, total) {
-                const percentage = Math.round((loaded / total) * 100);
-                progressBar.style.width = `${percentage}%`;
-            }
-
-            function hideProgress() {
+            // Stable Loading Logic
+            iframe.onload = () => {
+                document.getElementById(`loader-${index}`).style.width = '100%';
                 setTimeout(() => {
-                    progressContainer.classList.add('hidden');
-                }, 500);
+                    document.getElementById(`loader-${index}`).style.width = '0%';
+                }, 1000);
+            };
+
+            wrapper.appendChild(loader);
+            wrapper.appendChild(iframe);
+            container.appendChild(wrapper);
+
+            windows.push(iframe);
+        }
+
+        function refreshAll() {
+            console.log("System Refresh Triggered...");
+            const loaderBars = document.querySelectorAll('.loading-bar');
+            loaderBars.forEach(bar => bar.style.width = '30%');
+
+            windows.forEach(frame => {
+                frame.src = frame.src; // Forces reload
+            });
+        }
+
+        function toggleLayout() {
+            const container = document.getElementById('display-container');
+            APP_CONFIG.isGridView = !APP_CONFIG.isGridView;
+
+            if (APP_CONFIG.isGridView) {
+                container.className = "grid-layout";
+            } else {
+                container.className = "flex flex-col gap-4";
             }
+        }
 
-            // Messaging
-            function showMessage(message, type = 'info') {
-                messageBox.textContent = message;
-                messageBox.className = `mt-4 p-4 rounded-lg text-center font-medium ${getMessageClass(type)}`;
-                messageBox.classList.remove('hidden');
-
-                // Auto-hide unless it's an error
-                if (type !== 'error') {
-                    setTimeout(() => {
-                        messageBox.classList.add('hidden');
-                    }, 3000);
-                }
-            }
-
-            function getMessageClass(type) {
-                const classes = {
-                    'success': 'bg-green-100 border border-green-400 text-green-700 dark:bg-green-200 dark:text-green-900',
-                    'error': 'bg-red-100 border border-red-400 text-red-700 dark:bg-red-200 dark:text-red-900',
-                    'info': 'bg-blue-100 border border-blue-400 text-blue-700 dark:bg-blue-200 dark:text-blue-900',
-                    'warning': 'bg-yellow-100 border border-yellow-400 text-yellow-700 dark:bg-yellow-200 dark:text-yellow-900'
-                };
-                return classes[type] || classes['info'];
-            }
-
-            // Persistence
-            function saveWindows() {
-                if (!loadingComplete) return;
-
-                const windowsData = currentWindows.map(win => ({
-                    url: win.url,
-                    id: win.id
-                }));
-
-                localStorage.setItem('savedWindows', JSON.stringify(windowsData));
-            }
-
-            function loadSavedWindows() {
-                const savedWindows = localStorage.getItem('savedWindows');
-                if (savedWindows) {
-                    try {
-                        const windowsData = JSON.parse(savedWindows);
-                        if (windowsData.length > 0) {
-                            // Populate the search field with the first URL
-                            searchInput.value = windowsData[0].url;
-                            windowCountInput.value = windowsData.length;
-                            validateInput();
-                        }
-                    } catch (e) {
-                        console.error('Failed to load saved windows:', e);
-                    }
-                }
-            }
-
-            // Utility functions
-            function clearSearch() {
-                searchInput.value = '';
-                searchInput.focus();
-                validateInput();
-            }
-
-            // Initialize the app
-            init();
-        });
+        // Run on Startup
+        window.onload = init;
     </script>
 </body>
 
