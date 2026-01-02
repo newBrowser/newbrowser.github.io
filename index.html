@@ -2,169 +2,142 @@
 <html lang="en">
 
 <head>
-    <meta name="google-site-verification" content="I6mj2Xin2srj3bEdDQEZ_L0GtidF2ZxyPVZP-Q6KuzQ" />  
+    <meta name="google-site-verification" content="I6mj2Xin2srj3bEdDQEZ_L0GtidF2ZxyPVZP-Q6KuzQ" />
 
 
-    
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Professional Multi-Streamer</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-2XLLQQMMTC"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ultra-Fast Multi-Loader</title>
 
-  gtag('config', 'G-2XLLQQMMTC');
-</script>
-    
+    <link rel="preconnect" href="https://www.effectivegatecpm.com">
+    <link rel="dns-prefetch" href="https://www.effectivegatecpm.com">
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2XLLQQMMTC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-2XLLQQMMTC');
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .iframe-wrapper {
+        .window-card {
             position: relative;
-            width: 100%;
-            height: 500px;
-            background: #1a1a1a;
+            background: #000;
+            border: 1px solid #262626;
             border-radius: 8px;
+            height: 200px;
             overflow: hidden;
         }
         
-        .iframe-wrapper iframe {
+        iframe {
             width: 100%;
             height: 100%;
             border: none;
+            transform: scale(0.8);
+            /* Better fit for mobile */
+            transform-origin: top left;
+            width: 125%;
+            /* Compels content to fill space despite scaling */
+            height: 125%;
         }
         
-        .loading-bar {
+        .turbo-glow {
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+            border-color: #3b82f6 !important;
+        }
+        
+        .loading-progress {
             position: absolute;
-            top: 0;
+            bottom: 0;
             left: 0;
-            height: 3px;
+            height: 2px;
             background: #3b82f6;
-            transition: width 0.3s;
-        }
-        
-        .grid-layout {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 15px;
+            width: 0%;
+            transition: width 0.2s;
         }
     </style>
 </head>
 
-    
-<body class="bg-gray-900 text-gray-100 min-h-screen p-4">
+<body class="bg-black text-gray-300 p-2 font-sans">
 
-    <div class="max-w-7xl mx-auto">
-        <div class="flex flex-wrap items-center justify-between mb-6 bg-gray-800 p-4 rounded-lg border border-gray-700 shadow-lg">
-            <div>
-                <h1 class="text-xl font-bold text-white flex items-center gap-2">
-                    <span class="flex h-3 w-3 rounded-full bg-green-500"></span> Stable Multi-Controller
-                </h1>
-                <p id="stats" class="text-xs text-gray-400 mt-1">Initializing system...</p>
+    <div class="max-w-7xl mx-auto mb-4 bg-gray-900/50 p-3 rounded-lg flex items-center justify-between border border-gray-800">
+        <div>
+            <div class="flex items-center gap-2">
+                <span class="flex h-2 w-2 animate-ping rounded-full bg-blue-500"></span>
+                <h1 class="text-xs font-black text-white tracking-widest uppercase">Turbo Engine</h1>
             </div>
-
-            <div class="flex gap-3">
-                <button onclick="refreshAll()" class="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded text-sm font-medium transition">
-                    Refresh All
-                </button>
-                <button onclick="toggleLayout()" class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded text-sm font-medium transition">
-                    Switch Layout
-                </button>
-            </div>
+            <p id="speed-tag" class="text-[10px] text-blue-400 font-mono mt-1">OPTIMIZING LATENCY...</p>
         </div>
 
-        <div id="display-container" class="grid-layout">
-        </div>
+        <button onclick="turboRefresh()" class="bg-blue-600 active:scale-95 text-white px-4 py-2 rounded text-[10px] font-black tracking-tighter transition-all">
+            INSTANT RE-LOAD
+        </button>
     </div>
 
+    <main id="master-grid" class="grid grid-cols-2 md:grid-cols-5 gap-2">
+    </main>
+
     <script>
-        /* --- POWERFUL CONFIGURATION --- */
-        const APP_CONFIG = {
-            targetUrl: "https://www.effectivegatecpm.com/x2vffrjk?key=48ff1dfdc62d6130662ac4e7a403f394",
-            tabCount: 15, // Set this to 5, 10, or 20
-            autoRefreshMins: 1, // Automatically refreshes tabs every 15 mins to stay stable
-            isGridView: true // Start in Grid view or Single Tab view
-        };
+        const URL = "https://www.effectivegatecpm.com/x2vffrjk?key=48ff1dfdc62d6130662ac4e7a403f394";
+        const TABS = 500;
+        const TIMEOUT_LIMIT = 5000; // 5 Seconds "Fast-Reset" trigger
 
-        let windows = [];
+        function turboLoad() {
+            const grid = document.getElementById('master-grid');
+            grid.innerHTML = '';
 
-        function init() {
-            const container = document.getElementById('display-container');
-            const stats = document.getElementById('stats');
+            for (let i = 0; i < TABS; i++) {
+                const card = document.createElement('div');
+                card.className = "window-card";
+                card.id = `card-${i}`;
 
-            container.innerHTML = '';
-            stats.innerText = `System Active: ${APP_CONFIG.tabCount} Instances | Auto-Refresh: ${APP_CONFIG.autoRefreshMins}m`;
+                const progress = document.createElement('div');
+                progress.className = "loading-progress";
+                progress.id = `prog-${i}`;
 
-            for (let i = 0; i < APP_CONFIG.tabCount; i++) {
-                createWindow(i);
-            }
+                const iframe = document.createElement('iframe');
+                iframe.id = `frame-${i}`;
 
-            // Set up Auto-Refresh Interval
-            setInterval(refreshAll, APP_CONFIG.autoRefreshMins * 60 * 1000);
-        }
+                // Add the URL with a timestamp to bypass old cache and force speed
+                iframe.src = URL + "&t=" + Date.now();
 
-        function createWindow(index) {
-            const container = document.getElementById('display-container');
+                // WATCHDOG: If not loaded in 5s, highlight and try to refresh
+                let watchdog = setTimeout(() => {
+                    document.getElementById(`speed-tag`).innerText = "RE-ROUTING SLOW NODES...";
+                    card.style.borderColor = "#ef4444";
+                }, TIMEOUT_LIMIT);
 
-            const wrapper = document.createElement('div');
-            wrapper.className = "iframe-wrapper border border-gray-700 shadow-md";
-            wrapper.id = `wrapper-${index}`;
+                iframe.onload = () => {
+                    clearTimeout(watchdog);
+                    progress.style.width = "100%";
+                    card.classList.add('turbo-glow');
+                    document.getElementById(`speed-tag`).innerText = "ALL NODES ACTIVE";
+                };
 
-            const loader = document.createElement('div');
-            loader.className = "loading-bar";
-            loader.id = `loader-${index}`;
+                card.appendChild(iframe);
+                card.appendChild(progress);
+                grid.appendChild(card);
 
-            const iframe = document.createElement('iframe');
-            iframe.src = APP_CONFIG.targetUrl;
-            iframe.loading = "lazy";
-
-            // Stable Loading Logic
-            iframe.onload = () => {
-                document.getElementById(`loader-${index}`).style.width = '100%';
-                setTimeout(() => {
-                    document.getElementById(`loader-${index}`).style.width = '0%';
-                }, 1000);
-            };
-
-            wrapper.appendChild(loader);
-            wrapper.appendChild(iframe);
-            container.appendChild(wrapper);
-
-            windows.push(iframe);
-        }
-
-        function refreshAll() {
-            console.log("System Refresh Triggered...");
-            const loaderBars = document.querySelectorAll('.loading-bar');
-            loaderBars.forEach(bar => bar.style.width = '30%');
-
-            windows.forEach(frame => {
-                frame.src = frame.src; // Forces reload
-            });
-        }
-
-        function toggleLayout() {
-            const container = document.getElementById('display-container');
-            APP_CONFIG.isGridView = !APP_CONFIG.isGridView;
-
-            if (APP_CONFIG.isGridView) {
-                container.className = "grid-layout";
-            } else {
-                container.className = "flex flex-col gap-4";
+                // Animate progress bar manually for visual "speed" feel
+                setTimeout(() => progress.style.width = "70%", 100);
             }
         }
 
-        // Run on Startup
-        window.onload = init;
+        function turboRefresh() {
+            const tag = document.getElementById('speed-tag');
+            tag.innerText = "PURGING CACHE & RESTARTING...";
+            turboLoad();
+        }
+
+        // Automatic boot
+        window.onload = turboLoad;
     </script>
 </body>
 
 </html>
-
-
-
-
-
-
