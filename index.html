@@ -1,1171 +1,276 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta name="google-site-verification" content="I6mj2Xin2srj3bEdDQEZ_L0GtidF2ZxyPVZP-Q6KuzQ" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Turbo-Batch Multi-Loader | Sequential Engine</title>
-
-    <!-- DNS Prefetching for global CDNs -->
-    <link rel="preconnect" href="https://www.effectivegatecpm.com">
-    <link rel="dns-prefetch" href="https://www.effectivegatecpm.com">
-
-    <!-- Global CDN alternatives for redundancy -->
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-
-    <!-- Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2XLLQQMMTC"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
-        gtag('config', 'G-2XLLQQMMTC');
-    </script>
-
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-
+    <title>Turbo Loader</title>
     <style>
-         :root {
-            --turbo-blue: #3b82f6;
-            --turbo-green: #10b981;
-            --turbo-red: #ef4444;
-            --turbo-orange: #f59e0b;
-            --card-bg: #000;
-            --border-color: #262626;
-        }
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
         
         body {
-            overflow-x: hidden;
             background: #000;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            overflow-x: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            padding: 4px;
         }
         
-        .window-card {
-            position: relative;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            height: 140px;
-            overflow: hidden;
-            transition: all 0.2s ease;
-            animation: cardAppear 0.3s ease-out;
+        .tab-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 3px;
+            width: 100%;
         }
         
-        @keyframes cardAppear {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
+        @media (min-width: 640px) {
+            .tab-grid {
+                grid-template-columns: repeat(10, 1fr);
+                gap: 4px;
             }
+        }
+        
+        .tab-card {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 6px;
+            height: 80px;
+            position: relative;
+            overflow: hidden;
+            animation: tabAppear 0.2s ease-out forwards;
+            opacity: 0;
+        }
+        
+        @keyframes tabAppear {
             to {
                 opacity: 1;
-                transform: translateY(0);
             }
         }
         
-        .window-card:hover {
-            transform: translateY(-2px);
-            border-color: var(--turbo-blue);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-        
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            transform: scale(0.8);
-            transform-origin: top left;
-            width: 125%;
-            height: 125%;
-        }
-        
-        .turbo-glow {
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.7);
-            border-color: var(--turbo-blue) !important;
-            animation: pulseGlow 2s infinite;
-        }
-        
-        @keyframes pulseGlow {
-            0%,
-            100% {
-                box-shadow: 0 0 20px rgba(59, 130, 246, 0.7);
-            }
-            50% {
-                box-shadow: 0 0 30px rgba(59, 130, 246, 0.9);
-            }
-        }
-        
-        .success-glow {
-            box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
-            border-color: var(--turbo-green) !important;
-        }
-        
-        .loading-progress {
+        .tab-number {
             position: absolute;
-            bottom: 0;
-            left: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--turbo-blue), var(--turbo-green));
-            width: 0%;
-            transition: width 0.3s ease;
-            z-index: 10;
-            border-radius: 0 0 8px 8px;
-        }
-        
-        .card-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(30, 30, 30, 0.95));
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 5;
-            opacity: 1;
-            transition: opacity 0.3s ease;
-            padding: 10px;
-        }
-        
-        .tab-badge {
-            position: absolute;
-            top: 6px;
-            right: 6px;
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
+            top: 3px;
+            right: 3px;
+            background: rgba(0,0,0,0.7);
+            color: #fff;
             font-size: 9px;
-            padding: 1px 5px;
+            padding: 1px 4px;
             border-radius: 8px;
-            z-index: 20;
-            font-family: 'Courier New', monospace;
             font-weight: bold;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 2;
         }
         
-        .status-indicator {
+        .tab-status {
+            position: absolute;
+            top: 3px;
+            left: 3px;
             width: 6px;
             height: 6px;
             border-radius: 50%;
+            background: #3b82f6;
+            z-index: 2;
+        }
+        
+        .tab-loaded .tab-status {
+            background: #10b981;
+            animation: none;
+        }
+        
+        .tab-progress {
             position: absolute;
-            top: 6px;
-            left: 6px;
-            z-index: 20;
-        }
-        
-        .queued .status-indicator {
-            background-color: #6b7280;
-        }
-        
-        .loading .status-indicator {
-            background-color: var(--turbo-orange);
-            animation: pulse 1s infinite;
-        }
-        
-        .loaded .status-indicator {
-            background-color: var(--turbo-green);
-        }
-        
-        .failed .status-indicator {
-            background-color: var(--turbo-red);
-        }
-        
-        @keyframes pulse {
-            0%,
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-            50% {
-                opacity: 0.7;
-                transform: scale(1.2);
-            }
-        }
-        
-        .performance-meter {
-            height: 6px;
-            background: linear-gradient(90deg, var(--turbo-red), #f59e0b, var(--turbo-green));
-            width: 100%;
-            border-radius: 3px;
-            margin-top: 6px;
-            overflow: hidden;
-            position: relative;
-        }
-        
-        .performance-indicator {
-            height: 100%;
-            width: 100%;
-            background: #000;
-            transform-origin: left center;
-            transform: scaleX(0.7);
-            transition: transform 0.5s ease;
-        }
-        /* Batch Progress Bar */
-        
-        .batch-progress-container {
-            height: 4px;
-            background: rgba(255, 255, 255, 0.1);
-            width: 100%;
-            border-radius: 2px;
-            margin-top: 10px;
-            overflow: hidden;
-        }
-        
-        .batch-progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--turbo-blue), #8b5cf6);
+            bottom: 0;
+            left: 0;
             width: 0%;
-            transition: width 0.3s ease;
-            border-radius: 2px;
-        }
-        /* Responsive adjustments */
-        
-        @media (max-width: 640px) {
-            .window-card {
-                height: 120px;
-            }
+            height: 2px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            transition: width 0.1s linear;
+            z-index: 2;
         }
         
-        @media (min-width: 1024px) {
-            .window-card {
-                height: 160px;
-            }
+        .tab-loaded .tab-progress {
+            width: 100% !important;
+            background: #10b981;
         }
         
-        @media (min-width: 1536px) {
-            .window-card {
-                height: 180px;
-            }
+        .tab-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
         }
         
-        .control-panel {
-            position: sticky;
-            top: 10px;
-            z-index: 1000;
-            background: rgba(15, 15, 15, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 20px;
+        .tab-loaded .tab-iframe {
+            opacity: 1;
         }
         
-        .connection-status {
-            position: fixed;
-            bottom: 15px;
-            right: 15px;
-            background: rgba(0, 0, 0, 0.9);
-            padding: 10px 15px;
-            border-radius: 8px;
-            font-size: 12px;
-            z-index: 1000;
-            border: 1px solid var(--border-color);
+        .tab-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a1a, #222);
             display: flex;
             align-items: center;
-            gap: 8px;
-            backdrop-filter: blur(5px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            justify-content: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
         }
         
-        .connection-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-        }
-        
-        .connection-good {
-            background-color: var(--turbo-green);
-            box-shadow: 0 0 8px var(--turbo-green);
-        }
-        
-        .connection-slow {
-            background-color: var(--turbo-orange);
-            box-shadow: 0 0 8px var(--turbo-orange);
-        }
-        
-        .connection-poor {
-            background-color: var(--turbo-red);
-            box-shadow: 0 0 8px var(--turbo-red);
-        }
-        
-        .batch-timer {
-            font-family: 'Courier New', monospace;
-            font-size: 11px;
-            color: var(--turbo-blue);
-            font-weight: bold;
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 10px;
-            margin-top: 15px;
-        }
-        
-        .stat-box {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            padding: 10px;
+        .tab-placeholder-text {
+            color: #444;
+            font-size: 8px;
             text-align: center;
+            padding: 4px;
         }
         
-        .stat-value {
-            font-size: 18px;
-            font-weight: bold;
-            color: white;
-            font-family: 'Courier New', monospace;
+        .tab-loaded .tab-placeholder {
+            display: none;
         }
         
-        .stat-label {
-            font-size: 10px;
-            color: #9ca3af;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+        /* Loading animation */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
         
-        .turbo-btn {
-            background: linear-gradient(135deg, var(--turbo-blue), #2563eb);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 12px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .turbo-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
-        }
-        
-        .turbo-btn:active {
-            transform: translateY(0);
-        }
-        
-        .secondary-btn {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .secondary-btn:hover {
-            background: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        .batch-indicator {
-            display: inline-block;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            margin-right: 6px;
-            animation: batchPulse 1.5s infinite;
-        }
-        
-        @keyframes batchPulse {
-            0%,
-            100% {
-                background-color: var(--turbo-blue);
-                box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
-            }
-            50% {
-                box-shadow: 0 0 0 8px rgba(59, 130, 246, 0);
-            }
-        }
-        
-        .speed-indicator {
-            font-family: 'Courier New', monospace;
-            font-size: 10px;
-            padding: 3px 8px;
-            border-radius: 12px;
-            background: rgba(59, 130, 246, 0.2);
-            border: 1px solid rgba(59, 130, 246, 0.3);
+        .loading .tab-status {
+            animation: pulse 1s infinite;
         }
     </style>
 </head>
-
-<body class="bg-black text-gray-300 p-3 font-sans">
-    <!-- Control Panel -->
-    <div class="control-panel max-w-7xl mx-auto">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div class="flex-1">
-                <div class="flex items-center gap-3">
-                    <div class="batch-indicator"></div>
-                    <h1 class="text-lg font-black text-white tracking-tight">TURBO-BATCH ENGINE</h1>
-                    <span class="speed-indicator">150ms BATCHES</span>
-                </div>
-                <p id="speed-tag" class="text-xs text-blue-400 font-mono mt-2">INITIALIZING SEQUENTIAL BATCHING...</p>
-
-                <!-- Batch Progress -->
-                <div class="mt-3">
-                    <div class="flex justify-between text-xs text-gray-400">
-                        <span>Batch Progress: <span id="current-batch">0</span>/<span id="total-batches">0</span></span>
-                        <span class="batch-timer" id="batch-timer">0ms</span>
-                    </div>
-                    <div class="batch-progress-container">
-                        <div id="batch-progress-bar" class="batch-progress-bar"></div>
-                    </div>
-                </div>
-
-                <!-- Performance Meter -->
-                <div class="mt-4">
-                    <div class="flex justify-between text-xs text-gray-400">
-                        <span>System Performance</span>
-                        <span id="performance-text">Optimizing...</span>
-                    </div>
-                    <div class="performance-meter">
-                        <div id="performance-indicator" class="performance-indicator"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="flex flex-wrap gap-2">
-                <button onclick="startTurboBatching()" id="start-btn" class="turbo-btn">
-                    START TURBO-BATCH
-                </button>
-                <button onclick="pauseResumeBatching()" id="pause-btn" class="secondary-btn" disabled>
-                    PAUSE
-                </button>
-                <button onclick="resetAllBatches()" class="secondary-btn">
-                    RESET ALL
-                </button>
-            </div>
-        </div>
-
-        <!-- Statistics Grid -->
-        <div class="stats-grid mt-4">
-            <div class="stat-box">
-                <div class="stat-value" id="loaded-count">0</div>
-                <div class="stat-label">Loaded</div>
-            </div>
-            <div class="stat-box">
-                <div class="stat-value" id="loading-count">0</div>
-                <div class="stat-label">Loading</div>
-            </div>
-            <div class="stat-box">
-                <div class="stat-value" id="failed-count">0</div>
-                <div class="stat-label">Failed</div>
-            </div>
-            <div class="stat-box">
-                <div class="stat-value" id="queued-count">300</div>
-                <div class="stat-label">Queued</div>
-            </div>
-            <div class="stat-box">
-                <div class="stat-value" id="active-batches">0</div>
-                <div class="stat-label">Active Batches</div>
-            </div>
-            <div class="stat-box">
-                <div class="stat-value" id="avg-load-time">0ms</div>
-                <div class="stat-label">Avg Load Time</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Main grid for tabs -->
-    <main id="master-grid" class="grid grid-cols-3 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 2xl:grid-cols-12 gap-2">
-        <!-- Tabs will be dynamically inserted here -->
-    </main>
-
-    <!-- Connection status indicator -->
-    <div id="connection-status" class="connection-status">
-        <div id="connection-dot" class="connection-dot connection-good"></div>
-        <span id="connection-text">Connection: Good</span>
-    </div>
+<body>
+    <div id="tabGrid" class="tab-grid"></div>
 
     <script>
-        // ========== TURBO-BATCHING CONFIGURATION ==========
+        // Configuration - SIMPLE AND FAST
         const URL = "https://www.effectivegatecpm.com/x2vffrjk?key=48ff1dfdc62d6130662ac4e7a403f394";
-        const TOTAL_TABS = 100;
-        const BATCH_SIZE = 150; // Tabs per batch
-        const BATCH_INTERVAL = 150; // Milliseconds between batches
-        const TIMEOUT_LIMIT = 10000; // 10 seconds timeout for global
-        const MAX_CONCURRENT_BATCHES = 2; // Maximum concurrent batches
-
-        // ========== GLOBAL STATE MANAGEMENT ==========
-        let state = {
-            isBatchingActive: false,
-            isPaused: false,
-            totalBatches: Math.ceil(TOTAL_TABS / BATCH_SIZE),
-            currentBatchIndex: 0,
-            loadedTabs: 0,
-            loadingTabs: 0,
-            failedTabs: 0,
-            queuedTabs: TOTAL_TABS,
-            activeBatches: 0,
-            batchTimers: [],
-            tabStates: new Array(TOTAL_TABS).fill(null).map((_, i) => ({
-                id: i,
-                status: 'queued', // queued, loading, loaded, failed
-                startTime: null,
-                loadTime: null,
-                element: null,
-                iframe: null
-            })),
-            performance: {
-                loadTimes: [],
-                batchStartTime: null,
-                lastBatchTime: null
-            },
-            connection: {
-                quality: 'good',
-                latency: 0,
-                lastTest: null
-            }
-        };
-
-        // ========== DOM ELEMENTS ==========
-        const elements = {
-            grid: document.getElementById('master-grid'),
-            speedTag: document.getElementById('speed-tag'),
-            loadedCount: document.getElementById('loaded-count'),
-            loadingCount: document.getElementById('loading-count'),
-            failedCount: document.getElementById('failed-count'),
-            queuedCount: document.getElementById('queued-count'),
-            currentBatch: document.getElementById('current-batch'),
-            totalBatches: document.getElementById('total-batches'),
-            batchProgressBar: document.getElementById('batch-progress-bar'),
-            batchTimer: document.getElementById('batch-timer'),
-            performanceIndicator: document.getElementById('performance-indicator'),
-            performanceText: document.getElementById('performance-text'),
-            startBtn: document.getElementById('start-btn'),
-            pauseBtn: document.getElementById('pause-btn'),
-            activeBatches: document.getElementById('active-batches'),
-            avgLoadTime: document.getElementById('avg-load-time'),
-            connectionStatus: document.getElementById('connection-status'),
-            connectionDot: document.getElementById('connection-dot'),
-            connectionText: document.getElementById('connection-text')
-        };
-
-        // ========== INITIALIZATION ==========
-        function init() {
-            console.log('🚀 Turbo-Batch Engine Initialized');
-            console.log(`📊 Configuration: ${TOTAL_TABS} tabs, ${BATCH_SIZE} per batch, ${BATCH_INTERVAL}ms intervals`);
-
-            // Set initial UI values
-            elements.totalBatches.textContent = state.totalBatches;
-            elements.currentBatch.textContent = state.currentBatchIndex;
-            updateBatchProgress();
-
-            // Create all tab containers (queued state)
-            createTabContainers();
-
-            // Start connection monitoring
-            startConnectionMonitor();
-
-            // Update UI
-            updateStatistics();
-
-            // Auto-start after 1 second
-            setTimeout(() => {
-                startTurboBatching();
-            }, 1000);
-        }
-
-        // ========== TURBO-BATCHING ENGINE ==========
-        function startTurboBatching() {
-            if (state.isBatchingActive) return;
-
-            state.isBatchingActive = true;
-            state.isPaused = false;
-            state.performance.batchStartTime = Date.now();
-
-            elements.startBtn.disabled = true;
-            elements.pauseBtn.disabled = false;
-            elements.speedTag.textContent = `TURBO-BATCHING ACTIVE: ${BATCH_SIZE} tabs every ${BATCH_INTERVAL}ms`;
-            elements.speedTag.style.color = "var(--turbo-blue)";
-
-            console.log(`🚀 Starting Turbo-Batching: ${state.totalBatches} batches`);
-
-            // Start the first batch immediately
-            processNextBatch();
-
-            // Start batch timer display
-            updateBatchTimerDisplay();
-        }
-
-        function processNextBatch() {
-            if (state.isPaused || !state.isBatchingActive) return;
-
-            // Check if we've reached maximum concurrent batches
-            if (state.activeBatches >= MAX_CONCURRENT_BATCHES) {
-                console.log('⏳ Maximum concurrent batches reached, waiting...');
-                setTimeout(() => processNextBatch(), 100);
-                return;
-            }
-
-            // Check if all batches are complete
-            if (state.currentBatchIndex >= state.totalBatches) {
-                completeAllBatches();
-                return;
-            }
-
-            const batchStart = state.currentBatchIndex * BATCH_SIZE;
-            const batchEnd = Math.min(batchStart + BATCH_SIZE, TOTAL_TABS);
-
-            console.log(`▶️ Starting Batch ${state.currentBatchIndex + 1}/${state.totalBatches} (Tabs ${batchStart + 1}-${batchEnd})`);
-
-            // Update UI
-            state.currentBatchIndex++;
-            elements.currentBatch.textContent = state.currentBatchIndex;
-            updateBatchProgress();
-
-            // Process this batch
-            state.activeBatches++;
-            elements.activeBatches.textContent = state.activeBatches;
-
-            const batchTimer = setTimeout(() => {
-                loadBatch(batchStart, batchEnd, state.currentBatchIndex - 1);
-            }, 0);
-
-            state.batchTimers.push(batchTimer);
-
-            // Schedule next batch
-            if (state.currentBatchIndex < state.totalBatches) {
-                const nextBatchTimer = setTimeout(() => {
-                    processNextBatch();
-                }, BATCH_INTERVAL);
-
-                state.batchTimers.push(nextBatchTimer);
-            }
-        }
-
-        function loadBatch(startIdx, endIdx, batchNumber) {
-            console.log(`⚡ Loading Batch ${batchNumber + 1}: Tabs ${startIdx + 1}-${endIdx}`);
-
-            for (let i = startIdx; i < endIdx; i++) {
-                // Update tab state
-                state.tabStates[i].status = 'loading';
-                state.tabStates[i].startTime = Date.now();
-                state.loadingTabs++;
-                state.queuedTabs--;
-
-                // Update UI for this tab
-                updateTabElement(i);
-
-                // Stagger individual tab loading within batch (prevents connection flooding)
-                setTimeout(() => {
-                    loadIndividualTab(i);
-                }, (i - startIdx) * 10); // 10ms stagger within batch
-            }
-
-            // Update statistics
-            updateStatistics();
-        }
-
-        function loadIndividualTab(tabIndex) {
-            const tabState = state.tabStates[tabIndex];
-            if (!tabState.element || tabState.status !== 'loading') return;
-
-            const card = tabState.element;
-            const iframe = card.querySelector('iframe');
-            const progress = card.querySelector('.loading-progress');
-            const overlay = card.querySelector('.card-overlay');
-
-            // Generate unique URL with cache busting
-            const uniqueURL = `${URL}&t=${Date.now()}&tab=${tabIndex}&batch=${Math.floor(tabIndex/BATCH_SIZE)}&r=${Math.random()}`;
-
-            // Set up timeout
-            const timeoutId = setTimeout(() => {
-                if (tabState.status === 'loading') {
-                    handleTabFailure(tabIndex, 'Timeout');
-                }
-            }, TIMEOUT_LIMIT);
-
-            // Progress animation
-            let progressPercent = 0;
-            const progressInterval = setInterval(() => {
-                if (progressPercent < 80 && tabState.status === 'loading') {
-                    progressPercent += Math.random() * 5;
-                    if (progress) progress.style.width = `${progressPercent}%`;
-                }
-            }, 100);
-
-            // Iframe load handlers
-            iframe.onload = () => {
-                clearTimeout(timeoutId);
-                clearInterval(progressInterval);
-
-                tabState.status = 'loaded';
-                tabState.loadTime = Date.now() - tabState.startTime;
-                state.performance.loadTimes.push(tabState.loadTime);
-
-                // Update UI
-                state.loadingTabs--;
-                state.loadedTabs++;
-                updateStatistics();
-                updateTabElement(tabIndex);
-
-                // Complete progress bar
-                if (progress) {
-                    progress.style.width = '100%';
-                    progress.style.background = 'linear-gradient(90deg, var(--turbo-green), #10b981)';
-                }
-
-                // Fade out overlay
-                if (overlay) {
-                    overlay.style.opacity = '0';
-                    setTimeout(() => {
-                        overlay.style.display = 'none';
-                    }, 300);
-                }
-
-                // Check if batch is complete
-                checkBatchCompletion(tabIndex);
-
-                // Update performance
-                updatePerformance();
-            };
-
-            iframe.onerror = () => {
-                clearTimeout(timeoutId);
-                clearInterval(progressInterval);
-                handleTabFailure(tabIndex, 'Network Error');
-            };
-
-            // Start loading
-            iframe.src = uniqueURL;
-            tabState.iframe = iframe;
-        }
-
-        function handleTabFailure(tabIndex, reason) {
-            const tabState = state.tabStates[tabIndex];
-            tabState.status = 'failed';
-            tabState.loadTime = Date.now() - tabState.startTime;
-
-            // Update UI
-            state.loadingTabs--;
-            state.failedTabs++;
-            updateStatistics();
-            updateTabElement(tabIndex);
-
-            // Update tab element
-            const card = tabState.element;
-            if (card) {
-                card.classList.remove('loading');
-                card.classList.add('failed');
-
-                const overlay = card.querySelector('.card-overlay');
-                if (overlay) {
-                    overlay.innerHTML = `
-                        <div class="text-center p-2">
-                            <div class="text-xs text-red-400 font-bold">FAILED</div>
-                            <div class="text-[10px] text-gray-400 mt-1">${reason}</div>
-                            <button onclick="retryTab(${tabIndex})" 
-                                    class="mt-2 px-3 py-1 bg-gray-800 hover:bg-gray-700 rounded text-[10px] text-white">
-                                RETRY
-                            </button>
-                        </div>
-                    `;
-                }
-            }
-
-            console.warn(`❌ Tab ${tabIndex + 1} failed: ${reason}`);
-            checkBatchCompletion(tabIndex);
-        }
-
-        function checkBatchCompletion(tabIndex) {
-            const batchNumber = Math.floor(tabIndex / BATCH_SIZE);
-            const batchStart = batchNumber * BATCH_SIZE;
-            const batchEnd = Math.min(batchStart + BATCH_SIZE, TOTAL_TABS);
-
-            // Check if all tabs in this batch are done (loaded or failed)
-            const batchTabs = state.tabStates.slice(batchStart, batchEnd);
-            const isBatchComplete = batchTabs.every(tab =>
-                tab.status === 'loaded' || tab.status === 'failed'
-            );
-
-            if (isBatchComplete) {
-                state.activeBatches--;
-                elements.activeBatches.textContent = state.activeBatches;
-
-                console.log(`✅ Batch ${batchNumber + 1} complete`);
-
-                // If there are no more active batches and we're not paused, process next batch
-                if (state.activeBatches === 0 && !state.isPaused && state.isBatchingActive) {
-                    setTimeout(() => processNextBatch(), 50);
-                }
-            }
-        }
-
-        function completeAllBatches() {
-            state.isBatchingActive = false;
-
-            // Calculate total time
-            const totalTime = Date.now() - state.performance.batchStartTime;
-            const avgLoadTime = state.performance.loadTimes.length > 0 ?
-                Math.round(state.performance.loadTimes.reduce((a, b) => a + b, 0) / state.performance.loadTimes.length) :
-                0;
-
-            // Update UI
-            elements.speedTag.textContent = `COMPLETE! ${state.loadedTabs}/${TOTAL_TABS} tabs loaded in ${(totalTime/1000).toFixed(1)}s`;
-            elements.speedTag.style.color = "var(--turbo-green)";
-            elements.startBtn.disabled = false;
-            elements.pauseBtn.disabled = true;
-            elements.pauseBtn.textContent = "PAUSE";
-
-            console.log(`🎉 All batches complete! Total time: ${(totalTime/1000).toFixed(2)}s`);
-            console.log(`📊 Statistics: ${state.loadedTabs} loaded, ${state.failedTabs} failed, Average load: ${avgLoadTime}ms`);
-
-            // Update final statistics
-            updateStatistics();
-            updatePerformance();
-        }
-
-        // ========== CONTROL FUNCTIONS ==========
-        function pauseResumeBatching() {
-            if (!state.isBatchingActive) return;
-
-            state.isPaused = !state.isPaused;
-
-            if (state.isPaused) {
-                // Pause all batch timers
-                state.batchTimers.forEach(timer => clearTimeout(timer));
-                state.batchTimers = [];
-
-                elements.pauseBtn.textContent = "RESUME";
-                elements.speedTag.textContent = "BATCHING PAUSED";
-                elements.speedTag.style.color = "var(--turbo-orange)";
-
-                console.log('⏸️ Batching paused');
-            } else {
-                // Resume batching
-                elements.pauseBtn.textContent = "PAUSE";
-                elements.speedTag.textContent = "RESUMING TURBO-BATCHING...";
-                elements.speedTag.style.color = "var(--turbo-blue)";
-
-                // Continue with next batch
-                setTimeout(() => {
-                    processNextBatch();
-                    updateBatchTimerDisplay();
-                }, 100);
-
-                console.log('▶️ Batching resumed');
-            }
-        }
-
-        function resetAllBatches() {
-            // Clear all timers
-            state.batchTimers.forEach(timer => clearTimeout(timer));
-            state.batchTimers = [];
-
-            // Reset state
-            state.isBatchingActive = false;
-            state.isPaused = false;
-            state.currentBatchIndex = 0;
-            state.loadedTabs = 0;
-            state.loadingTabs = 0;
-            state.failedTabs = 0;
-            state.queuedTabs = TOTAL_TABS;
-            state.activeBatches = 0;
-
-            // Reset all tab states
-            state.tabStates.forEach((tab, i) => {
-                tab.status = 'queued';
-                tab.startTime = null;
-                tab.loadTime = null;
-                if (tab.iframe) {
-                    tab.iframe.src = '';
-                    tab.iframe = null;
-                }
-            });
-
-            // Reset performance data
-            state.performance.loadTimes = [];
-            state.performance.batchStartTime = null;
-            state.performance.lastBatchTime = null;
-
-            // Clear grid and recreate
-            elements.grid.innerHTML = '';
-            createTabContainers();
-
-            // Update UI
-            updateStatistics();
-            updateBatchProgress();
-            elements.currentBatch.textContent = '0';
-            elements.activeBatches.textContent = '0';
-            elements.startBtn.disabled = false;
-            elements.pauseBtn.disabled = true;
-            elements.pauseBtn.textContent = "PAUSE";
-            elements.speedTag.textContent = "READY FOR TURBO-BATCHING";
-            elements.speedTag.style.color = "var(--turbo-blue)";
-
-            console.log('🔄 All batches reset');
-        }
-
-        function retryTab(tabIndex) {
-            const tabState = state.tabStates[tabIndex];
-
-            // Reset tab state
-            tabState.status = 'loading';
-            tabState.startTime = Date.now();
-            state.failedTabs--;
-            state.loadingTabs++;
-            updateStatistics();
-            updateTabElement(tabIndex);
-
-            // Reload the tab
-            loadIndividualTab(tabIndex);
-        }
-
-        // ========== UI UPDATES ==========
-        function createTabContainers() {
-            elements.grid.innerHTML = '';
-
-            for (let i = 0; i < TOTAL_TABS; i++) {
-                const card = document.createElement('div');
-                card.className = `window-card queued`;
-                card.id = `card-${i}`;
-                card.dataset.index = i;
-
-                // Status indicator
-                const statusIndicator = document.createElement('div');
-                statusIndicator.className = "status-indicator";
-
-                // Tab badge
-                const tabBadge = document.createElement('div');
-                tabBadge.className = "tab-badge";
-                tabBadge.textContent = `#${i + 1}`;
-
-                // Loading overlay
-                const overlay = document.createElement('div');
-                overlay.className = "card-overlay";
-                overlay.id = `overlay-${i}`;
-                overlay.innerHTML = `
-                    <div class="text-center">
-                        <div class="text-xs text-gray-400 mb-1">QUEUED</div>
-                        <div class="text-[10px] text-gray-500">Batch ${Math.floor(i/BATCH_SIZE) + 1}</div>
-                    </div>
-                `;
-
-                // Progress bar
-                const progress = document.createElement('div');
-                progress.className = "loading-progress";
-                progress.id = `prog-${i}`;
-
-                // Iframe
-                const iframe = document.createElement('iframe');
-                iframe.id = `frame-${i}`;
-                iframe.loading = "lazy";
-
-                // Assemble card
-                card.appendChild(statusIndicator);
-                card.appendChild(tabBadge);
-                card.appendChild(overlay);
-                card.appendChild(iframe);
-                card.appendChild(progress);
-
-                elements.grid.appendChild(card);
-                state.tabStates[i].element = card;
-            }
-        }
-
-        function updateTabElement(tabIndex) {
-            const tabState = state.tabStates[tabIndex];
-            if (!tabState.element) return;
-
-            const card = tabState.element;
-            const overlay = card.querySelector('.card-overlay');
-
-            // Update card classes
-            card.className = `window-card ${tabState.status}`;
-
-            // Update overlay content based on status
-            if (overlay) {
-                switch (tabState.status) {
-                    case 'loading':
-                        overlay.innerHTML = `
-                            <div class="text-center">
-                                <div class="text-xs text-blue-400 font-bold">LOADING</div>
-                                <div class="text-[10px] text-gray-400 mt-1">Batch ${Math.floor(tabIndex/BATCH_SIZE) + 1}</div>
-                            </div>
-                        `;
-                        overlay.style.display = 'flex';
-                        overlay.style.opacity = '1';
-                        break;
-
-                    case 'loaded':
-                        // Overlay will be hidden by onload handler
-                        break;
-
-                    case 'failed':
-                        overlay.innerHTML = `
-                            <div class="text-center">
-                                <div class="text-xs text-red-400 font-bold">FAILED</div>
-                                <button onclick="retryTab(${tabIndex})" 
-                                        class="mt-2 px-3 py-1 bg-gray-800 hover:bg-gray-700 rounded text-[10px] text-white">
-                                    RETRY
-                                </button>
-                            </div>
-                        `;
-                        overlay.style.display = 'flex';
-                        overlay.style.opacity = '1';
-                        break;
-                }
-            }
-        }
-
-        function updateStatistics() {
-            elements.loadedCount.textContent = state.loadedTabs;
-            elements.loadingCount.textContent = state.loadingTabs;
-            elements.failedCount.textContent = state.failedTabs;
-            elements.queuedCount.textContent = state.queuedTabs;
-
-            // Update average load time
-            if (state.performance.loadTimes.length > 0) {
-                const avg = Math.round(
-                    state.performance.loadTimes.reduce((a, b) => a + b, 0) /
-                    state.performance.loadTimes.length
-                );
-                elements.avgLoadTime.textContent = `${avg}ms`;
-            }
-        }
-
-        function updateBatchProgress() {
-            const progress = (state.currentBatchIndex / state.totalBatches) * 100;
-            elements.batchProgressBar.style.width = `${progress}%`;
-        }
-
-        function updateBatchTimerDisplay() {
-            if (!state.isBatchingActive || state.isPaused) return;
-
-            const elapsed = Date.now() - state.performance.batchStartTime;
-            elements.batchTimer.textContent = `${(elapsed/1000).toFixed(1)}s`;
-
-            requestAnimationFrame(updateBatchTimerDisplay);
-        }
-
-        function updatePerformance() {
-            const totalLoaded = state.loadedTabs + state.failedTabs;
-            const successRate = totalLoaded > 0 ? state.loadedTabs / totalLoaded : 0;
-
-            // Calculate performance score (0-1)
-            let performanceScore = successRate * 0.7; // 70% weight to success rate
-
-            // Add weight for load times if we have data
-            if (state.performance.loadTimes.length > 0) {
-                const avgLoadTime = state.performance.loadTimes.reduce((a, b) => a + b, 0) /
-                    state.performance.loadTimes.length;
-                const timeScore = Math.max(0, 1 - (avgLoadTime / 5000)); // 5s max for good score
-                performanceScore += timeScore * 0.3; // 30% weight to speed
-            }
-
-            // Clamp to 0-1
-            performanceScore = Math.max(0, Math.min(1, performanceScore));
-
-            // Update performance indicator
-            elements.performanceIndicator.style.transform = `scaleX(${performanceScore})`;
-
-            // Update text and colors
-            if (performanceScore >= 0.8) {
-                elements.performanceIndicator.style.backgroundColor = "var(--turbo-green)";
-                elements.performanceText.textContent = "EXCELLENT";
-                elements.performanceText.style.color = "var(--turbo-green)";
-            } else if (performanceScore >= 0.6) {
-                elements.performanceIndicator.style.backgroundColor = "var(--turbo-orange)";
-                elements.performanceText.textContent = "GOOD";
-                elements.performanceText.style.color = "var(--turbo-orange)";
-            } else if (performanceScore >= 0.4) {
-                elements.performanceIndicator.style.backgroundColor = "var(--turbo-orange)";
-                elements.performanceText.textContent = "FAIR";
-                elements.performanceText.style.color = "var(--turbo-orange)";
-            } else {
-                elements.performanceIndicator.style.backgroundColor = "var(--turbo-red)";
-                elements.performanceText.textContent = "SLOW";
-                elements.performanceText.style.color = "var(--turbo-red)";
-            }
-        }
-
-        // ========== CONNECTION MONITORING ==========
-        function startConnectionMonitor() {
-            // Test connection every 15 seconds
-            setInterval(testConnection, 15000);
-            testConnection();
-        }
-
-        function testConnection() {
-            const testUrl = `${URL}&ping=${Date.now()}`;
-            const startTime = Date.now();
-
-            // Use a small image request for connection testing
-            const img = new Image();
-            img.onload = () => {
-                const latency = Date.now() - startTime;
-                updateConnectionStatus(latency);
-            };
-            img.onerror = () => {
-                updateConnectionStatus(9999); // Very poor connection
-            };
-
-            img.src = testUrl;
-        }
-
-        function updateConnectionStatus(latency) {
-            state.connection.latency = latency;
-            state.connection.lastTest = Date.now();
-
-            let quality, colorClass;
-
-            if (latency < 200) {
-                quality = 'EXCELLENT';
-                colorClass = 'connection-good';
-                state.connection.quality = 'good';
-            } else if (latency < 800) {
-                quality = 'GOOD';
-                colorClass = 'connection-slow';
-                state.connection.quality = 'slow';
-            } else if (latency < 2000) {
-                quality = 'FAIR';
-                colorClass = 'connection-slow';
-                state.connection.quality = 'slow';
-            } else {
-                quality = 'POOR';
-                colorClass = 'connection-poor';
-                state.connection.quality = 'poor';
-            }
-
-            // Update UI
-            elements.connectionDot.className = `connection-dot ${colorClass}`;
-            elements.connectionText.textContent = `${quality} (${latency}ms)`;
-
-            // Adjust batch interval based on connection quality
-            if (state.connection.quality === 'poor' && BATCH_INTERVAL < 300) {
-                console.log('🌐 Poor connection detected - consider increasing batch interval');
-            }
-        }
-
-        // ========== WINDOW EVENT HANDLERS ==========
-        window.addEventListener('load', init);
-
-        // Visibility API - pause when tab is not visible
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden && state.isBatchingActive && !state.isPaused) {
-                console.log('👁️ Tab hidden, auto-pausing batches');
-                pauseResumeBatching();
-            }
+        const TOTAL_TABS = 50;
+        const BATCH_SIZE = 150;
+        const BATCH_DELAY = 150; // 150ms between batches
+        const TAB_DELAY = 1; // 1ms between tabs in batch
+        
+        // Start loading IMMEDIATELY when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(startTurboLoad, 10); // Start in 10ms
         });
-
-        // Export functions to global scope for button onclick handlers
-        window.startTurboBatching = startTurboBatching;
-        window.pauseResumeBatching = pauseResumeBatching;
-        window.resetAllBatches = resetAllBatches;
-        window.retryTab = retryTab;
+        
+        function startTurboLoad() {
+            // Create grid immediately
+            createAllTabs();
+            
+            // Start loading in batches
+            loadBatch(0, 0);
+        }
+        
+        function createAllTabs() {
+            const grid = document.getElementById('tabGrid');
+            grid.innerHTML = '';
+            
+            // Create all 300 tabs instantly
+            for (let i = 0; i < TOTAL_TABS; i++) {
+                const tab = document.createElement('div');
+                tab.className = 'tab-card loading';
+                tab.id = `tab-${i}`;
+                tab.style.animationDelay = `${(i % 100) * 2}ms`; // Stagger appearance
+                
+                tab.innerHTML = `
+                    <div class="tab-number">${i+1}</div>
+                    <div class="tab-status"></div>
+                    <div class="tab-placeholder">
+                        <div class="tab-placeholder-text">LOADING...</div>
+                    </div>
+                    <iframe class="tab-iframe" id="frame-${i}"></iframe>
+                    <div class="tab-progress" id="progress-${i}"></div>
+                `;
+                
+                grid.appendChild(tab);
+            }
+        }
+        
+        function loadBatch(batchIndex, tabIndex) {
+            if (tabIndex >= TOTAL_TABS) return;
+            
+            const startIndex = batchIndex * BATCH_SIZE;
+            const endIndex = Math.min(startIndex + BATCH_SIZE, TOTAL_TABS);
+            
+            // Load this batch
+            for (let i = startIndex; i < endIndex; i++) {
+                setTimeout(() => {
+                    loadSingleTab(i);
+                }, (i - startIndex) * TAB_DELAY);
+            }
+            
+            // Schedule next batch
+            if (endIndex < TOTAL_TABS) {
+                setTimeout(() => {
+                    loadBatch(batchIndex + 1, endIndex);
+                }, BATCH_DELAY);
+            }
+        }
+        
+        function loadSingleTab(index) {
+            const tab = document.getElementById(`tab-${index}`);
+            const iframe = document.getElementById(`frame-${index}`);
+            const progress = document.getElementById(`progress-${index}`);
+            
+            if (!tab || !iframe) return;
+            
+            // Start visual progress
+            let visualProgress = 0;
+            const progressInterval = setInterval(() => {
+                if (visualProgress < 90) {
+                    visualProgress += 10 + Math.random() * 15;
+                    progress.style.width = `${Math.min(visualProgress, 90)}%`;
+                }
+            }, 30);
+            
+            // Load actual content
+            const url = `${URL}&t=${Date.now()}&tab=${index}&r=${Math.random()}`;
+            iframe.src = url;
+            
+            // Mark as loaded after random short delay (100-600ms)
+            const loadDelay = 100 + Math.random() * 500;
+            
+            setTimeout(() => {
+                clearInterval(progressInterval);
+                
+                // Complete visual loading
+                progress.style.width = '100%';
+                tab.classList.remove('loading');
+                tab.classList.add('tab-loaded');
+                
+                // Remove placeholder after iframe loads
+                setTimeout(() => {
+                    const placeholder = tab.querySelector('.tab-placeholder');
+                    if (placeholder) {
+                        placeholder.style.opacity = '0';
+                        setTimeout(() => {
+                            placeholder.style.display = 'none';
+                        }, 300);
+                    }
+                }, 200);
+                
+            }, loadDelay);
+            
+            // Real timeout fallback
+            setTimeout(() => {
+                clearInterval(progressInterval);
+                if (!tab.classList.contains('tab-loaded')) {
+                    progress.style.width = '100%';
+                    progress.style.background = '#ef4444';
+                    tab.classList.remove('loading');
+                }
+            }, 3000);
+        }
+        
+        // Handle mobile touch events
+        document.addEventListener('touchstart', function() {}, {passive: true});
+        document.addEventListener('touchmove', function() {}, {passive: true});
     </script>
 </body>
-
 </html>
-
