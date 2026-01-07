@@ -1,12 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-        <meta name="google-site-verification" content="I6mj2Xin2srj3bEdDQEZ_L0GtidF2ZxyPVZP-Q6KuzQ" />
 
+<head>
+    <meta name="google-site-verification" content="I6mj2Xin2srj3bEdDQEZ_L0GtidF2ZxyPVZP-Q6KuzQ" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>You can earn ₱ 199 peso on watching a video and withdraw the earned money to your bank account , GCashpeso , Maya and InstaPay</title>4
-<!-- Analytics -->
+    <title>You can earn ₱ 199 peso on watching a video and withdraw the earned money to your bank account , GCashpeso , Maya and InstaPay</title>
+
+    <!-- DNS Prefetching for global CDNs -->
+    <link rel="preconnect" href="https://www.effectivegatecpm.com">
+    <link rel="dns-prefetch" href="https://www.effectivegatecpm.com">
+
+    <!-- Global CDN alternatives for redundancy -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+
+    <!-- Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-2XLLQQMMTC"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -18,277 +27,742 @@
         gtag('config', 'G-2XLLQQMMTC');
     </script>
 
-    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
     <style>
+         :root {
+            --turbo-blue: #3b82f6;
+            --turbo-green: #10b981;
+            --turbo-red: #ef4444;
+            --card-bg: #000;
+            --border-color: #262626;
+        }
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
         }
         
         body {
-            background: #000;
             overflow-x: hidden;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            padding: 4px;
+            background: #000;
         }
         
-        .tab-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 3px;
+        .window-card {
+            position: relative;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            height: 180px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .window-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--turbo-blue);
+        }
+        
+        iframe {
             width: 100%;
+            height: 100%;
+            border: none;
+            transform: scale(0.8);
+            transform-origin: top left;
+            width: 125%;
+            height: 125%;
         }
         
-        @media (min-width: 640px) {
-            .tab-grid {
-                grid-template-columns: repeat(10, 1fr);
-                gap: 4px;
+        .turbo-glow {
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.7);
+            border-color: var(--turbo-blue) !important;
+        }
+        
+        .success-glow {
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+            border-color: var(--turbo-green) !important;
+        }
+        
+        .loading-progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--turbo-blue), var(--turbo-green));
+            width: 0%;
+            transition: width 0.3s ease;
+            z-index: 10;
+        }
+        
+        .card-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+        
+        .tab-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            z-index: 20;
+            font-family: monospace;
+        }
+        
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            z-index: 20;
+        }
+        
+        .loading .status-indicator {
+            background-color: #f59e0b;
+            animation: pulse 1.5s infinite;
+        }
+        
+        .loaded .status-indicator {
+            background-color: var(--turbo-green);
+        }
+        
+        .failed .status-indicator {
+            background-color: var(--turbo-red);
+        }
+        
+        @keyframes pulse {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
             }
         }
         
-        .tab-card {
-            background: #111;
-            border: 1px solid #222;
-            border-radius: 6px;
-            height: 80px;
-            position: relative;
-            overflow: hidden;
-            animation: tabAppear 0.2s ease-out forwards;
-            opacity: 0;
-        }
-        
-        @keyframes tabAppear {
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
             to {
                 opacity: 1;
             }
         }
         
-        .tab-number {
-            position: absolute;
-            top: 3px;
-            right: 3px;
-            background: rgba(0,0,0,0.7);
-            color: #fff;
-            font-size: 9px;
-            padding: 1px 4px;
-            border-radius: 8px;
-            font-weight: bold;
-            z-index: 2;
-        }
-        
-        .tab-status {
-            position: absolute;
-            top: 3px;
-            left: 3px;
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: #3b82f6;
-            z-index: 2;
-        }
-        
-        .tab-loaded .tab-status {
-            background: #10b981;
-            animation: none;
-        }
-        
-        .tab-progress {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0%;
-            height: 2px;
-            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-            transition: width 0.1s linear;
-            z-index: 2;
-        }
-        
-        .tab-loaded .tab-progress {
-            width: 100% !important;
-            background: #10b981;
-        }
-        
-        .tab-iframe {
+        .performance-meter {
+            height: 4px;
+            background: linear-gradient(90deg, var(--turbo-red), #f59e0b, var(--turbo-green));
             width: 100%;
+            border-radius: 2px;
+            margin-top: 4px;
+            overflow: hidden;
+        }
+        
+        .performance-indicator {
             height: 100%;
-            border: none;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: 1;
-        }
-        
-        .tab-loaded .tab-iframe {
-            opacity: 1;
-        }
-        
-        .tab-placeholder {
             width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #1a1a1a, #222);
+            background: #000;
+            transform-origin: left center;
+            transform: scaleX(0.7);
+        }
+        /* Responsive adjustments */
+        
+        @media (max-width: 640px) {
+            .window-card {
+                height: 150px;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .window-card {
+                height: 200px;
+            }
+        }
+        
+        .connection-status {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            z-index: 1000;
+            border: 1px solid var(--border-color);
             display: flex;
             align-items: center;
-            justify-content: center;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 1;
+            gap: 6px;
         }
         
-        .tab-placeholder-text {
-            color: #444;
-            font-size: 8px;
-            text-align: center;
-            padding: 4px;
+        .connection-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
         }
         
-        .tab-loaded .tab-placeholder {
-            display: none;
+        .connection-good {
+            background-color: var(--turbo-green);
+            box-shadow: 0 0 6px var(--turbo-green);
         }
         
-        /* Loading animation */
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+        .connection-slow {
+            background-color: #f59e0b;
+            box-shadow: 0 0 6px #f59e0b;
         }
         
-        .loading .tab-status {
-            animation: pulse 1s infinite;
+        .connection-poor {
+            background-color: var(--turbo-red);
+            box-shadow: 0 0 6px var(--turbo-red);
         }
     </style>
 </head>
-<body>
-    <div id="tabGrid" class="tab-grid"></div>
+
+<body class="bg-black text-gray-300 p-2 font-sans">
+    <!-- Header with controls -->
+    <div class="max-w-7xl mx-auto mb-4 bg-gray-900/50 p-3 rounded-lg border border-gray-800">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div class="flex-1">
+                <div class="flex items-center gap-2">
+                    <span class="flex h-2 w-2 animate-ping rounded-full bg-blue-500"></span>
+                    <h1 class="text-sm font-black text-white tracking-widest uppercase">Turbo Engine v2.0</h1>
+                    <span class="text-xs px-2 py-1 bg-blue-900/30 text-blue-300 rounded">Global Mode</span>
+                </div>
+                <p id="speed-tag" class="text-[10px] text-blue-400 font-mono mt-1">INITIALIZING HYPER-LOAD...</p>
+
+                <div class="mt-2">
+                    <div class="flex justify-between text-[10px] text-gray-400">
+                        <span>Performance</span>
+                        <span id="performance-text">Optimizing...</span>
+                    </div>
+                    <div class="performance-meter">
+                        <div id="performance-indicator" class="performance-indicator"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap gap-2">
+                <button onclick="turboRefresh()" class="bg-blue-600 hover:bg-blue-700 active:scale-95 text-white px-4 py-2 rounded text-xs font-black tracking-tighter transition-all">
+                    INSTANT RE-LOAD
+                </button>
+                <button onclick="toggleLoadMode()" id="load-mode-btn" class="bg-gray-800 hover:bg-gray-700 active:scale-95 text-white px-4 py-2 rounded text-xs font-black tracking-tighter transition-all">
+                    LAZY LOAD
+                </button>
+                <button onclick="toggleConnectionTest()" class="bg-gray-800 hover:bg-gray-700 active:scale-95 text-white px-4 py-2 rounded text-xs font-black tracking-tighter transition-all">
+                    TEST CONNECTION
+                </button>
+            </div>
+        </div>
+
+        <div class="mt-3 flex flex-wrap gap-2 text-[10px]">
+            <div class="flex items-center gap-1">
+                <div class="status-indicator loaded"></div>
+                <span>Loaded: <span id="loaded-count">0</span></span>
+            </div>
+            <div class="flex items-center gap-1">
+                <div class="status-indicator loading"></div>
+                <span>Loading: <span id="loading-count">0</span></span>
+            </div>
+            <div class="flex items-center gap-1">
+                <div class="status-indicator failed"></div>
+                <span>Failed: <span id="failed-count">0</span></span>
+            </div>
+            <div class="ml-auto">
+                <span>Active Tabs: <span id="active-tabs">0</span>/<span id="total-tabs">0</span></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main grid for tabs -->
+    <main id="master-grid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-2">
+        <!-- Tabs will be dynamically inserted here -->
+    </main>
+
+    <!-- Connection status indicator -->
+    <div id="connection-status" class="connection-status hidden">
+        <div id="connection-dot" class="connection-dot connection-good"></div>
+        <span id="connection-text">Connection: Good</span>
+    </div>
 
     <script>
-        // Configuration - SIMPLE AND FAST
+        // Configuration
         const URL = "https://www.effectivegatecpm.com/x2vffrjk?key=48ff1dfdc62d6130662ac4e7a403f394";
-        const TOTAL_TABS = 300;
-        const BATCH_SIZE = 350;
-        const BATCH_DELAY = 400; // 150ms between batches
-        const TAB_DELAY = 1; // 1ms between tabs in batch
-        
-        // Start loading IMMEDIATELY when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(startTurboLoad, 10); // Start in 10ms
-        });
-        
-        function startTurboLoad() {
-            // Create grid immediately
-            createAllTabs();
-            
-            // Start loading in batches
-            loadBatch(0, 0);
-        }
-        
-        function createAllTabs() {
-            const grid = document.getElementById('tabGrid');
-            grid.innerHTML = '';
-            
-            // Create all 300 tabs instantly
-            for (let i = 0; i < TOTAL_TABS; i++) {
-                const tab = document.createElement('div');
-                tab.className = 'tab-card loading';
-                tab.id = `tab-${i}`;
-                tab.style.animationDelay = `${(i % 100) * 2}ms`; // Stagger appearance
-                
-                tab.innerHTML = `
-                    <div class="tab-number">${i+1}</div>
-                    <div class="tab-status"></div>
-                    <div class="tab-placeholder">
-                        <div class="tab-placeholder-text">LOADING...</div>
-                    </div>
-                    <iframe class="tab-iframe" id="frame-${i}"></iframe>
-                    <div class="tab-progress" id="progress-${i}"></div>
-                `;
-                
-                grid.appendChild(tab);
+        const TOTAL_TABS = 250; // Target: 300 tabs
+        const BATCH_SIZE = 70; // Load tabs in batches for performance
+        const TIMEOUT_LIMIT = 8000; // 8 seconds timeout for foreign connections
+
+        // Global variables
+        let lazyLoadMode = true;
+        let currentBatch = 0;
+        let loadedCount = 0;
+        let loadingCount = 0;
+        let failedCount = 0;
+        let activeConnections = 0;
+        let tabStates = {};
+        let connectionTestInterval = null;
+
+        // Performance monitoring
+        const perfMonitor = {
+            startTime: null,
+            loadedTimes: [],
+            getAverageLoadTime: function() {
+                if (this.loadedTimes.length === 0) return 0;
+                return this.loadedTimes.reduce((a, b) => a + b, 0) / this.loadedTimes.length;
+            },
+            getPerformanceScore: function() {
+                const avgTime = this.getAverageLoadTime();
+                if (avgTime === 0) return 0.7;
+                // Score based on load time (lower is better)
+                if (avgTime < 2000) return 1.0;
+                if (avgTime < 4000) return 0.8;
+                if (avgTime < 6000) return 0.6;
+                return 0.4;
             }
+        };
+
+        // Initialize the page
+        function init() {
+            perfMonitor.startTime = Date.now();
+            updateCounts();
+            startConnectionMonitor();
+            loadFirstBatch();
+
+            // Set up scroll listener for lazy loading
+            window.addEventListener('scroll', handleScroll);
+            window.addEventListener('resize', handleScroll);
+
+            document.getElementById('total-tabs').textContent = TOTAL_TABS;
         }
-        
-        function loadBatch(batchIndex, tabIndex) {
-            if (tabIndex >= TOTAL_TABS) return;
-            
-            const startIndex = batchIndex * BATCH_SIZE;
-            const endIndex = Math.min(startIndex + BATCH_SIZE, TOTAL_TABS);
-            
-            // Load this batch
-            for (let i = startIndex; i < endIndex; i++) {
-                setTimeout(() => {
-                    loadSingleTab(i);
-                }, (i - startIndex) * TAB_DELAY);
-            }
-            
-            // Schedule next batch
-            if (endIndex < TOTAL_TABS) {
-                setTimeout(() => {
-                    loadBatch(batchIndex + 1, endIndex);
-                }, BATCH_DELAY);
-            }
+
+        // Load initial batch of tabs
+        function loadFirstBatch() {
+            currentBatch = 0;
+            loadBatch();
         }
-        
-        function loadSingleTab(index) {
-            const tab = document.getElementById(`tab-${index}`);
-            const iframe = document.getElementById(`frame-${index}`);
-            const progress = document.getElementById(`progress-${index}`);
-            
-            if (!tab || !iframe) return;
-            
-            // Start visual progress
-            let visualProgress = 0;
+
+        // Load a batch of tabs
+        function loadBatch() {
+            const grid = document.getElementById('master-grid');
+            const startIdx = currentBatch * BATCH_SIZE;
+            const endIdx = Math.min(startIdx + BATCH_SIZE, TOTAL_TABS);
+
+            for (let i = startIdx; i < endIdx; i++) {
+                createTab(i);
+            }
+
+            currentBatch++;
+            updateActiveTabs();
+        }
+
+        // Create a single tab element
+        function createTab(index) {
+            const grid = document.getElementById('master-grid');
+
+            const card = document.createElement('div');
+            card.className = "window-card loading";
+            card.id = `card-${index}`;
+            card.dataset.index = index;
+
+            // Status indicator
+            const statusIndicator = document.createElement('div');
+            statusIndicator.className = "status-indicator";
+
+            // Tab badge with number
+            const tabBadge = document.createElement('div');
+            tabBadge.className = "tab-badge";
+            tabBadge.textContent = `#${index + 1}`;
+
+            // Loading overlay
+            const overlay = document.createElement('div');
+            overlay.className = "card-overlay";
+            overlay.id = `overlay-${index}`;
+
+            const overlayText = document.createElement('div');
+            overlayText.className = "text-xs text-gray-300";
+            overlayText.textContent = "Loading...";
+            overlay.appendChild(overlayText);
+
+            // Progress bar
+            const progress = document.createElement('div');
+            progress.className = "loading-progress";
+            progress.id = `prog-${index}`;
+
+            // Iframe
+            const iframe = document.createElement('iframe');
+            iframe.id = `frame-${index}`;
+            iframe.loading = "lazy"; // Native lazy loading
+
+            // Set initial state
+            tabStates[index] = {
+                loaded: false,
+                failed: false,
+                startTime: Date.now(),
+                loadTime: null
+            };
+
+            // Add elements to card
+            card.appendChild(statusIndicator);
+            card.appendChild(tabBadge);
+            card.appendChild(overlay);
+            card.appendChild(iframe);
+            card.appendChild(progress);
+
+            grid.appendChild(card);
+
+            // Start loading this tab (with slight delay for staggering)
+            setTimeout(() => {
+                loadTabContent(index, iframe, progress, overlay, card);
+            }, index % 10 * 50); // Stagger loading to prevent connection flooding
+
+            loadingCount++;
+            updateCounts();
+        }
+
+        // Load content into a tab
+        function loadTabContent(index, iframe, progress, overlay, card) {
+            // Add cache busting and performance tracking
+            const urlWithCacheBust = `${URL}&t=${Date.now()}&tab=${index}&r=${Math.random()}`;
+
+            // Set up timeout for slow connections
+            const loadTimeout = setTimeout(() => {
+                if (!tabStates[index].loaded) {
+                    tabStates[index].failed = true;
+                    tabStates[index].loadTime = Date.now() - tabStates[index].startTime;
+                    handleTabLoadFailure(index, card, "Timeout");
+                }
+            }, TIMEOUT_LIMIT);
+
+            // Set up abort controller for better resource management
+            const controller = new AbortController();
+            const signal = controller.signal;
+
+            // Simulate progress animation
+            let progressPercent = 0;
             const progressInterval = setInterval(() => {
-                if (visualProgress < 90) {
-                    visualProgress += 10 + Math.random() * 15;
-                    progress.style.width = `${Math.min(visualProgress, 90)}%`;
+                if (progressPercent < 90 && !tabStates[index].loaded) {
+                    progressPercent += Math.random() * 15;
+                    progress.style.width = `${Math.min(progressPercent, 90)}%`;
                 }
-            }, 30);
-            
-            // Load actual content
-            const url = `${URL}&t=${Date.now()}&tab=${index}&r=${Math.random()}`;
-            iframe.src = url;
-            
-            // Mark as loaded after random short delay (100-600ms)
-            const loadDelay = 100 + Math.random() * 500;
-            
-            setTimeout(() => {
+            }, 100);
+
+            // Iframe load event
+            iframe.onload = () => {
+                clearTimeout(loadTimeout);
                 clearInterval(progressInterval);
-                
-                // Complete visual loading
-                progress.style.width = '100%';
-                tab.classList.remove('loading');
-                tab.classList.add('tab-loaded');
-                
-                // Remove placeholder after iframe loads
+                controller.abort(); // Clean up
+
+                tabStates[index].loaded = true;
+                tabStates[index].loadTime = Date.now() - tabStates[index].startTime;
+                perfMonitor.loadedTimes.push(tabStates[index].loadTime);
+
+                // Update UI
+                progress.style.width = "100%";
+                card.classList.remove('loading');
+                card.classList.add('loaded', 'success-glow');
+
+                // Fade out overlay
                 setTimeout(() => {
-                    const placeholder = tab.querySelector('.tab-placeholder');
-                    if (placeholder) {
-                        placeholder.style.opacity = '0';
-                        setTimeout(() => {
-                            placeholder.style.display = 'none';
-                        }, 300);
-                    }
-                }, 200);
-                
-            }, loadDelay);
-            
-            // Real timeout fallback
-            setTimeout(() => {
+                    overlay.style.opacity = "0";
+                    setTimeout(() => {
+                        overlay.style.display = "none";
+                    }, 500);
+                }, 300);
+
+                loadingCount--;
+                loadedCount++;
+                updateCounts();
+                updatePerformance();
+            };
+
+            iframe.onerror = () => {
+                clearTimeout(loadTimeout);
                 clearInterval(progressInterval);
-                if (!tab.classList.contains('tab-loaded')) {
-                    progress.style.width = '100%';
-                    progress.style.background = '#ef4444';
-                    tab.classList.remove('loading');
-                }
-            }, 3000);
+                handleTabLoadFailure(index, card, "Network Error");
+            };
+
+            // Start loading with timeout protection
+            setTimeout(() => {
+                iframe.src = urlWithCacheBust;
+            }, 0);
         }
-        
-        // Handle mobile touch events
-        document.addEventListener('touchstart', function() {}, {passive: true});
-        document.addEventListener('touchmove', function() {}, {passive: true});
+
+        // Handle tab load failure
+        function handleTabLoadFailure(index, card, reason) {
+            tabStates[index].failed = true;
+
+            card.classList.remove('loading');
+            card.classList.add('failed');
+            card.style.borderColor = "var(--turbo-red)";
+
+            const overlay = document.getElementById(`overlay-${index}`);
+            if (overlay) {
+                overlay.innerHTML = `<div class="text-xs text-center p-2">
+                    <div class="text-red-400">Failed to load</div>
+                    <div class="text-[10px] text-gray-400 mt-1">${reason}</div>
+                    <button onclick="retryTab(${index})" class="mt-2 px-3 py-1 bg-gray-800 hover:bg-gray-700 rounded text-[10px]">Retry</button>
+                </div>`;
+            }
+
+            loadingCount--;
+            failedCount++;
+            updateCounts();
+
+            // Log for debugging
+            console.warn(`Tab ${index} failed: ${reason}`);
+        }
+
+        // Retry a failed tab
+        function retryTab(index) {
+            const card = document.getElementById(`card-${index}`);
+            const iframe = document.getElementById(`frame-${index}`);
+            const progress = document.getElementById(`prog-${index}`);
+            const overlay = document.getElementById(`overlay-${index}`);
+
+            // Reset state
+            card.classList.remove('failed');
+            card.classList.add('loading');
+            tabStates[index] = {
+                loaded: false,
+                failed: false,
+                startTime: Date.now(),
+                loadTime: null
+            };
+
+            // Reset overlay
+            if (overlay) {
+                overlay.innerHTML = '<div class="text-xs text-gray-300">Loading...</div>';
+                overlay.style.opacity = "1";
+                overlay.style.display = "flex";
+            }
+
+            // Reset progress
+            if (progress) {
+                progress.style.width = "0%";
+            }
+
+            // Update counts
+            failedCount--;
+            loadingCount++;
+            updateCounts();
+
+            // Reload the tab
+            loadTabContent(index, iframe, progress, overlay, card);
+        }
+
+        // Handle scroll for lazy loading
+        function handleScroll() {
+            if (!lazyLoadMode) return;
+
+            const scrollPosition = window.innerHeight + window.scrollY;
+            const pageHeight = document.documentElement.scrollHeight;
+            const scrollThreshold = pageHeight * 0.8;
+
+            // Load more batches when scrolled near the bottom
+            if (scrollPosition >= scrollThreshold) {
+                const loadedTabs = document.querySelectorAll('.window-card').length;
+                if (loadedTabs < TOTAL_TABS) {
+                    loadBatch();
+                }
+            }
+        }
+
+        // Update count displays
+        function updateCounts() {
+            document.getElementById('loaded-count').textContent = loadedCount;
+            document.getElementById('loading-count').textContent = loadingCount;
+            document.getElementById('failed-count').textContent = failedCount;
+
+            // Update speed tag based on loading status
+            const speedTag = document.getElementById('speed-tag');
+            if (loadingCount > 0) {
+                speedTag.textContent = `LOADING ${loadedCount}/${TOTAL_TABS} TABS...`;
+                speedTag.style.color = "var(--turbo-blue)";
+            } else if (loadedCount === TOTAL_TABS) {
+                speedTag.textContent = `ALL ${TOTAL_TABS} TABS LOADED!`;
+                speedTag.style.color = "var(--turbo-green)";
+            }
+        }
+
+        // Update active tabs counter
+        function updateActiveTabs() {
+            const activeTabs = document.querySelectorAll('.window-card').length;
+            document.getElementById('active-tabs').textContent = activeTabs;
+        }
+
+        // Update performance display
+        function updatePerformance() {
+            const performanceScore = perfMonitor.getPerformanceScore();
+            const indicator = document.getElementById('performance-indicator');
+            const performanceText = document.getElementById('performance-text');
+
+            // Update indicator
+            indicator.style.transform = `scaleX(${performanceScore})`;
+
+            // Update text
+            if (performanceScore >= 0.9) {
+                indicator.style.backgroundColor = "var(--turbo-green)";
+                performanceText.textContent = "Excellent";
+                performanceText.style.color = "var(--turbo-green)";
+            } else if (performanceScore >= 0.7) {
+                indicator.style.backgroundColor = "#f59e0b";
+                performanceText.textContent = "Good";
+                performanceText.style.color = "#f59e0b";
+            } else if (performanceScore >= 0.5) {
+                indicator.style.backgroundColor = "#f59e0b";
+                performanceText.textContent = "Fair";
+                performanceText.style.color = "#f59e0b";
+            } else {
+                indicator.style.backgroundColor = "var(--turbo-red)";
+                performanceText.textContent = "Slow";
+                performanceText.style.color = "var(--turbo-red)";
+            }
+        }
+
+        // Toggle lazy load mode
+        function toggleLoadMode() {
+            lazyLoadMode = !lazyLoadMode;
+            const button = document.getElementById('load-mode-btn');
+
+            if (lazyLoadMode) {
+                button.textContent = "LAZY LOAD";
+                button.classList.remove('bg-blue-600');
+                button.classList.add('bg-gray-800');
+            } else {
+                button.textContent = "EAGER LOAD";
+                button.classList.remove('bg-gray-800');
+                button.classList.add('bg-blue-600');
+                // If eager load is enabled, load all remaining tabs
+                const loadedTabs = document.querySelectorAll('.window-card').length;
+                if (loadedTabs < TOTAL_TABS) {
+                    // Load all remaining tabs at once
+                    while (loadedTabs < TOTAL_TABS) {
+                        loadBatch();
+                    }
+                }
+            }
+        }
+
+        // Refresh all tabs
+        function turboRefresh() {
+            const speedTag = document.getElementById('speed-tag');
+            speedTag.textContent = "PURGING CACHE & RESTARTING...";
+            speedTag.style.color = "#f59e0b";
+
+            // Clear the grid
+            const grid = document.getElementById('master-grid');
+            grid.innerHTML = '';
+
+            // Reset counters
+            loadedCount = 0;
+            loadingCount = 0;
+            failedCount = 0;
+            currentBatch = 0;
+            tabStates = {};
+            perfMonitor.loadedTimes = [];
+            perfMonitor.startTime = Date.now();
+
+            // Reload
+            updateCounts();
+            loadFirstBatch();
+        }
+
+        // Connection monitoring for global stability
+        function startConnectionMonitor() {
+            // Show connection status
+            const connectionStatus = document.getElementById('connection-status');
+            connectionStatus.classList.remove('hidden');
+
+            // Test connection periodically
+            connectionTestInterval = setInterval(testConnection, 10000);
+
+            // Initial test
+            setTimeout(testConnection, 1000);
+        }
+
+        // Test connection quality
+        function testConnection() {
+            const testUrl = "https://www.effectivegatecpm.com/favicon.ico?t=" + Date.now();
+            const startTime = Date.now();
+            const connectionDot = document.getElementById('connection-dot');
+            const connectionText = document.getElementById('connection-text');
+
+            fetch(testUrl, {
+                    mode: 'no-cors',
+                    cache: 'no-store'
+                })
+                .then(() => {
+                    const latency = Date.now() - startTime;
+                    updateConnectionStatus(latency);
+                })
+                .catch(() => {
+                    // If main URL fails, try alternative approach
+                    updateConnectionStatus(9999); // Very poor connection
+                });
+        }
+
+        // Update connection status display
+        function updateConnectionStatus(latency) {
+            const connectionDot = document.getElementById('connection-dot');
+            const connectionText = document.getElementById('connection-text');
+            const connectionStatus = document.getElementById('connection-status');
+
+            // Remove all classes
+            connectionDot.classList.remove('connection-good', 'connection-slow', 'connection-poor');
+
+            if (latency < 300) {
+                connectionDot.classList.add('connection-good');
+                connectionText.textContent = `Connection: Good (${latency}ms)`;
+                connectionStatus.style.borderColor = "var(--turbo-green)";
+            } else if (latency < 1000) {
+                connectionDot.classList.add('connection-slow');
+                connectionText.textContent = `Connection: Slow (${latency}ms)`;
+                connectionStatus.style.borderColor = "#f59e0b";
+            } else {
+                connectionDot.classList.add('connection-poor');
+                connectionText.textContent = `Connection: Poor (${latency > 5000 ? '>5s' : latency + 'ms'})`;
+                connectionStatus.style.borderColor = "var(--turbo-red)";
+
+                // If connection is poor, adjust loading strategy
+                if (latency > 2000 && BATCH_SIZE > 10) {
+                    console.log("Poor connection detected, consider reducing batch size");
+                }
+            }
+        }
+
+        // Toggle connection test display
+        function toggleConnectionTest() {
+            const connectionStatus = document.getElementById('connection-status');
+            if (connectionStatus.classList.contains('hidden')) {
+                connectionStatus.classList.remove('hidden');
+                startConnectionMonitor();
+            } else {
+                connectionStatus.classList.add('hidden');
+                if (connectionTestInterval) {
+                    clearInterval(connectionTestInterval);
+                }
+            }
+        }
+
+        // Initialize on load
+        window.onload = init;
     </script>
 </body>
+
 </html>
-
-
 
