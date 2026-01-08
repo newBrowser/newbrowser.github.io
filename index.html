@@ -3,146 +3,214 @@
 
 <head>
     <meta name="google-site-verification" content="I6mj2Xin2srj3bEdDQEZ_L0GtidF2ZxyPVZP-Q6KuzQ" />
+
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>You can earn ₱ 199 peso on watching a video and withdraw the earned money to your bank account , GCashpeso , Maya and InstaPay</title>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-G0FJCMYEKM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
 
-    <!-- DNS Prefetching for global CDNs -->
-    <link rel="preconnect" href="https://www.effectivegatecpm.com">
-    <link rel="dns-prefetch" href="https://www.effectivegatecpm.com">
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
 
-    <!-- Global CDN alternatives for redundancy -->
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-G0FJCMYEKM"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-G0FJCMYEKM');
-</script>
-
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+        gtag('config', 'G-G0FJCMYEKM');
+    </script>
 
     <style>
-         :root {
-            --turbo-blue: #3b82f6;
-            --turbo-green: #10b981;
-            --turbo-red: #ef4444;
-            --card-bg: #000;
-            --border-color: #262626;
-        }
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
         
         body {
-            overflow-x: hidden;
             background: #000;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            color: white;
+            min-height: 100vh;
         }
         
-        .window-card {
+        .header {
+            background: linear-gradient(135deg, #1a1a1a, #000);
+            padding: 12px 15px;
+            border-bottom: 1px solid #333;
+            text-align: center;
+        }
+        
+        .title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+        
+        .subtitle {
+            font-size: 13px;
+            color: #00ff88;
+            font-weight: 500;
+        }
+        
+        .withdraw-methods {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .method {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-size: 11px;
+            color: #00ff88;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .status-bar {
+            background: #111;
+            padding: 8px 15px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: #888;
+            border-bottom: 1px solid #222;
+        }
+        
+        .loading-status {
+            color: #3b82f6;
+            font-weight: bold;
+        }
+        
+        .tabs-count {
+            color: #10b981;
+            font-weight: bold;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3px;
+            padding: 8px;
+        }
+        
+        @media (min-width: 640px) {
+            .grid {
+                grid-template-columns: repeat(6, 1fr);
+                gap: 4px;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .grid {
+                grid-template-columns: repeat(10, 1fr);
+                gap: 5px;
+            }
+        }
+        
+        .tab {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 6px;
+            height: 110px;
             position: relative;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            height: 180px;
             overflow: hidden;
-            transition: all 0.3s ease;
+            animation: appear 0.1s ease-out forwards;
+            opacity: 0;
         }
         
-        .window-card:hover {
-            transform: translateY(-2px);
-            border-color: var(--turbo-blue);
+        @keyframes appear {
+            to {
+                opacity: 1;
+            }
+        }
+        
+        .progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            transition: width 0.08s linear;
+            z-index: 2;
+        }
+        
+        .loaded .progress {
+            width: 100% !important;
+            background: #00ff88;
         }
         
         iframe {
             width: 100%;
             height: 100%;
             border: none;
-            transform: scale(0.8);
-            transform-origin: top left;
-            width: 125%;
-            height: 125%;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
         
-        .turbo-glow {
-            box-shadow: 0 0 15px rgba(59, 130, 246, 0.7);
-            border-color: var(--turbo-blue) !important;
+        .loaded iframe {
+            opacity: 1;
         }
         
-        .success-glow {
-            box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
-            border-color: var(--turbo-green) !important;
-        }
-        
-        .loading-progress {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--turbo-blue), var(--turbo-green));
-            width: 0%;
-            transition: width 0.3s ease;
-            z-index: 10;
-        }
-        
-        .card-overlay {
+        .placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a1a, #222);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+            color: #666;
+            font-size: 9px;
+            text-align: center;
+            padding: 10px;
+        }
+        
+        .placeholder-icon {
+            width: 20px;
+            height: 20px;
+            background: #333;
+            border-radius: 50%;
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 5;
-            opacity: 1;
-            transition: opacity 0.5s ease;
-        }
-        
-        .tab-badge {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            background: rgba(0, 0, 0, 0.7);
-            color: white;
+            color: #666;
             font-size: 10px;
-            padding: 2px 6px;
-            border-radius: 10px;
-            z-index: 20;
-            font-family: monospace;
         }
         
-        .status-indicator {
+        .loaded .placeholder {
+            display: none;
+        }
+        
+        .status-dot {
+            position: absolute;
+            top: 5px;
+            right: 5px;
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            position: absolute;
-            top: 8px;
-            left: 8px;
-            z-index: 20;
+            z-index: 2;
         }
         
-        .loading .status-indicator {
-            background-color: #f59e0b;
-            animation: pulse 1.5s infinite;
-        }
-        
-        .loaded .status-indicator {
-            background-color: var(--turbo-green);
-        }
-        
-        .failed .status-indicator {
-            background-color: var(--turbo-red);
+        .status-loading {
+            background: #3b82f6;
+            animation: pulse 1s infinite;
         }
         
         @keyframes pulse {
@@ -155,616 +223,222 @@
             }
         }
         
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+        .status-loaded {
+            background: #00ff88;
+            box-shadow: 0 0 6px #00ff88;
         }
         
-        .performance-meter {
-            height: 4px;
-            background: linear-gradient(90deg, var(--turbo-red), #f59e0b, var(--turbo-green));
-            width: 100%;
-            border-radius: 2px;
-            margin-top: 4px;
-            overflow: hidden;
-        }
-        
-        .performance-indicator {
-            height: 100%;
-            width: 100%;
-            background: #000;
-            transform-origin: left center;
-            transform: scaleX(0.7);
-        }
-        /* Responsive adjustments */
-        
-        @media (max-width: 640px) {
-            .window-card {
-                height: 150px;
-            }
-        }
-        
-        @media (min-width: 1024px) {
-            .window-card {
-                height: 200px;
-            }
-        }
-        
-        .connection-status {
-            position: fixed;
-            bottom: 10px;
-            right: 10px;
-            background: rgba(0, 0, 0, 0.8);
-            padding: 8px 12px;
-            border-radius: 6px;
-            font-size: 12px;
-            z-index: 1000;
-            border: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        
-        .connection-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-        }
-        
-        .connection-good {
-            background-color: var(--turbo-green);
-            box-shadow: 0 0 6px var(--turbo-green);
-        }
-        
-        .connection-slow {
-            background-color: #f59e0b;
-            box-shadow: 0 0 6px #f59e0b;
-        }
-        
-        .connection-poor {
-            background-color: var(--turbo-red);
-            box-shadow: 0 0 6px var(--turbo-red);
+        .status-type {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            font-size: 8px;
+            color: #888;
+            z-index: 2;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 1px 4px;
+            border-radius: 3px;
         }
     </style>
 </head>
 
-<body class="bg-black text-gray-300 p-2 font-sans">
-    <!-- Header with controls -->
-    <div class="max-w-7xl mx-auto mb-4 bg-gray-900/50 p-3 rounded-lg border border-gray-800">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div class="flex-1">
-                <div class="flex items-center gap-2">
-                    <span class="flex h-2 w-2 animate-ping rounded-full bg-blue-500"></span>
-                    <h1 class="text-sm font-black text-white tracking-widest uppercase">Turbo Engine v2.0</h1>
-                    <span class="text-xs px-2 py-1 bg-blue-900/30 text-blue-300 rounded">Global Mode</span>
-                </div>
-                <p id="speed-tag" class="text-[10px] text-blue-400 font-mono mt-1">INITIALIZING HYPER-LOAD...</p>
+<body>
+    <div class="header">
+        <div class="title">You can earn ₱ 199 peso on watching a video and withdraw the earned money to your bank account , GCashpeso , Maya and InstaPay</div>
 
-                <div class="mt-2">
-                    <div class="flex justify-between text-[10px] text-gray-400">
-                        <span>Performance</span>
-                        <span id="performance-text">Optimizing...</span>
-                    </div>
-                    <div class="performance-meter">
-                        <div id="performance-indicator" class="performance-indicator"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="flex flex-wrap gap-2">
-                <button onclick="turboRefresh()" class="bg-blue-600 hover:bg-blue-700 active:scale-95 text-white px-4 py-2 rounded text-xs font-black tracking-tighter transition-all">
-                    INSTANT RE-LOAD
-                </button>
-                <button onclick="toggleLoadMode()" id="load-mode-btn" class="bg-gray-800 hover:bg-gray-700 active:scale-95 text-white px-4 py-2 rounded text-xs font-black tracking-tighter transition-all">
-                    LAZY LOAD
-                </button>
-                <button onclick="toggleConnectionTest()" class="bg-gray-800 hover:bg-gray-700 active:scale-95 text-white px-4 py-2 rounded text-xs font-black tracking-tighter transition-all">
-                    TEST CONNECTION
-                </button>
-            </div>
-        </div>
-
-        <div class="mt-3 flex flex-wrap gap-2 text-[10px]">
-            <div class="flex items-center gap-1">
-                <div class="status-indicator loaded"></div>
-                <span>Loaded: <span id="loaded-count">0</span></span>
-            </div>
-            <div class="flex items-center gap-1">
-                <div class="status-indicator loading"></div>
-                <span>Loading: <span id="loading-count">0</span></span>
-            </div>
-            <div class="flex items-center gap-1">
-                <div class="status-indicator failed"></div>
-                <span>Failed: <span id="failed-count">0</span></span>
-            </div>
-            <div class="ml-auto">
-                <span>Active Tabs: <span id="active-tabs">0</span>/<span id="total-tabs">0</span></span>
-            </div>
-        </div>
     </div>
 
-    <!-- Main grid for tabs -->
-    <main id="master-grid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-2">
-        <!-- Tabs will be dynamically inserted here -->
-    </main>
 
-    <!-- Connection status indicator -->
-    <div id="connection-status" class="connection-status hidden">
-        <div id="connection-dot" class="connection-dot connection-good"></div>
-        <span id="connection-text">Connection: Good</span>
-    </div>
+    <div id="grid" class="grid"></div>
 
     <script>
-        // Configuration
-        const URL = "https://wheelchairavoid.com/q488gz0f7?key=e31bf88fad0626d5d8f2a272e1851183";
-const TOTAL_TABS = 5; // Change to 50, 100, 150, etc.
-        const BATCH_SIZE = 200; // Load tabs in batches for performance
-        const TIMEOUT_LIMIT = 8000; // 8 seconds timeout for foreign connections
+        // CONFIGURATION
+        const TOTAL_TABS = 5;
+        const BATCH_SIZE = 20;
+        const BATCH_DELAY = 80;
+        const TAB_DELAY = 2;
 
-        // Global variables
-        let lazyLoadMode = true;
-        let currentBatch = 0;
-        let loadedCount = 0;
-        let loadingCount = 0;
-        let failedCount = 0;
-        let activeConnections = 0;
-        let tabStates = {};
-        let connectionTestInterval = null;
+        // THREE LINKS THAT ROTATE
+        const LINKS = [
+            "https://wheelchairavoid.com/xfgugi2e9r?key=c5267ade6366ce93c388872cfb649fac",
+            "https://wheelchairavoid.com/j81bwakgtr?key=aa9dbe1fe14ea2d9a4ea1bbc0357b683",
+            "https://wheelchairavoid.com/q488gz0f7?key=e31bf88fad0626d5d8f2a272e1851183"
+        ];
 
-        // Performance monitoring
-        const perfMonitor = {
-            startTime: null,
-            loadedTimes: [],
-            getAverageLoadTime: function() {
-                if (this.loadedTimes.length === 0) return 0;
-                return this.loadedTimes.reduce((a, b) => a + b, 0) / this.loadedTimes.length;
-            },
-            getPerformanceScore: function() {
-                const avgTime = this.getAverageLoadTime();
-                if (avgTime === 0) return 0.7;
-                // Score based on load time (lower is better)
-                if (avgTime < 2000) return 1.0;
-                if (avgTime < 4000) return 0.8;
-                if (avgTime < 6000) return 0.6;
-                return 0.4;
-            }
-        };
+        // State tracking
+        let loadedTabs = 0;
+        let openingTabs = 0;
+        let linkIndex = 0;
 
-        // Initialize the page
-        function init() {
-            perfMonitor.startTime = Date.now();
-            updateCounts();
-            startConnectionMonitor();
-            loadFirstBatch();
+        // Start loading immediately
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(startLoading, 50);
+            updateTitle();
+        });
 
-            // Set up scroll listener for lazy loading
-            window.addEventListener('scroll', handleScroll);
-            window.addEventListener('resize', handleScroll);
-
-            document.getElementById('total-tabs').textContent = TOTAL_TABS;
+        function startLoading() {
+            createTabs();
+            loadAllTabs();
         }
 
-        // Load initial batch of tabs
-        function loadFirstBatch() {
-            currentBatch = 0;
-            loadBatch();
-        }
-
-        // Load a batch of tabs
-        function loadBatch() {
-            const grid = document.getElementById('master-grid');
-            const startIdx = currentBatch * BATCH_SIZE;
-            const endIdx = Math.min(startIdx + BATCH_SIZE, TOTAL_TABS);
-
-            for (let i = startIdx; i < endIdx; i++) {
-                createTab(i);
-            }
-
-            currentBatch++;
-            updateActiveTabs();
-        }
-
-        // Create a single tab element
-        function createTab(index) {
-            const grid = document.getElementById('master-grid');
-
-            const card = document.createElement('div');
-            card.className = "window-card loading";
-            card.id = `card-${index}`;
-            card.dataset.index = index;
-
-            // Status indicator
-            const statusIndicator = document.createElement('div');
-            statusIndicator.className = "status-indicator";
-
-            // Tab badge with number
-            const tabBadge = document.createElement('div');
-            tabBadge.className = "tab-badge";
-            tabBadge.textContent = `#${index + 1}`;
-
-            // Loading overlay
-            const overlay = document.createElement('div');
-            overlay.className = "card-overlay";
-            overlay.id = `overlay-${index}`;
-
-            const overlayText = document.createElement('div');
-            overlayText.className = "text-xs text-gray-300";
-            overlayText.textContent = "Loading...";
-            overlay.appendChild(overlayText);
-
-            // Progress bar
-            const progress = document.createElement('div');
-            progress.className = "loading-progress";
-            progress.id = `prog-${index}`;
-
-            // Iframe
-            const iframe = document.createElement('iframe');
-            iframe.id = `frame-${index}`;
-            iframe.loading = "lazy"; // Native lazy loading
-
-            // Set initial state
-            tabStates[index] = {
-                loaded: false,
-                failed: false,
-                startTime: Date.now(),
-                loadTime: null
-            };
-
-            // Add elements to card
-            card.appendChild(statusIndicator);
-            card.appendChild(tabBadge);
-            card.appendChild(overlay);
-            card.appendChild(iframe);
-            card.appendChild(progress);
-
-            grid.appendChild(card);
-
-            // Start loading this tab (with slight delay for staggering)
-            setTimeout(() => {
-                loadTabContent(index, iframe, progress, overlay, card);
-            }, index % 10 * 50); // Stagger loading to prevent connection flooding
-
-            loadingCount++;
-            updateCounts();
-        }
-
-        // Load content into a tab
-        function loadTabContent(index, iframe, progress, overlay, card) {
-            // Add cache busting and performance tracking
-            const urlWithCacheBust = `${URL}&t=${Date.now()}&tab=${index}&r=${Math.random()}`;
-
-            // Set up timeout for slow connections
-            const loadTimeout = setTimeout(() => {
-                if (!tabStates[index].loaded) {
-                    tabStates[index].failed = true;
-                    tabStates[index].loadTime = Date.now() - tabStates[index].startTime;
-                    handleTabLoadFailure(index, card, "Timeout");
-                }
-            }, TIMEOUT_LIMIT);
-
-            // Set up abort controller for better resource management
-            const controller = new AbortController();
-            const signal = controller.signal;
-
-            // Simulate progress animation
-            let progressPercent = 0;
-            const progressInterval = setInterval(() => {
-                if (progressPercent < 90 && !tabStates[index].loaded) {
-                    progressPercent += Math.random() * 15;
-                    progress.style.width = `${Math.min(progressPercent, 90)}%`;
-                }
-            }, 100);
-
-            // Iframe load event
-            iframe.onload = () => {
-                clearTimeout(loadTimeout);
-                clearInterval(progressInterval);
-                controller.abort(); // Clean up
-
-                tabStates[index].loaded = true;
-                tabStates[index].loadTime = Date.now() - tabStates[index].startTime;
-                perfMonitor.loadedTimes.push(tabStates[index].loadTime);
-
-                // Update UI
-                progress.style.width = "100%";
-                card.classList.remove('loading');
-                card.classList.add('loaded', 'success-glow');
-
-                // Fade out overlay
-                setTimeout(() => {
-                    overlay.style.opacity = "0";
-                    setTimeout(() => {
-                        overlay.style.display = "none";
-                    }, 500);
-                }, 300);
-
-                loadingCount--;
-                loadedCount++;
-                updateCounts();
-                updatePerformance();
-            };
-
-            iframe.onerror = () => {
-                clearTimeout(loadTimeout);
-                clearInterval(progressInterval);
-                handleTabLoadFailure(index, card, "Network Error");
-            };
-
-            // Start loading with timeout protection
-            setTimeout(() => {
-                iframe.src = urlWithCacheBust;
-            }, 0);
-        }
-
-        // Handle tab load failure
-        function handleTabLoadFailure(index, card, reason) {
-            tabStates[index].failed = true;
-
-            card.classList.remove('loading');
-            card.classList.add('failed');
-            card.style.borderColor = "var(--turbo-red)";
-
-            const overlay = document.getElementById(`overlay-${index}`);
-            if (overlay) {
-                overlay.innerHTML = `<div class="text-xs text-center p-2">
-                    <div class="text-red-400">Failed to load</div>
-                    <div class="text-[10px] text-gray-400 mt-1">${reason}</div>
-                    <button onclick="retryTab(${index})" class="mt-2 px-3 py-1 bg-gray-800 hover:bg-gray-700 rounded text-[10px]">Retry</button>
-                </div>`;
-            }
-
-            loadingCount--;
-            failedCount++;
-            updateCounts();
-
-            // Log for debugging
-            console.warn(`Tab ${index} failed: ${reason}`);
-        }
-
-        // Retry a failed tab
-        function retryTab(index) {
-            const card = document.getElementById(`card-${index}`);
-            const iframe = document.getElementById(`frame-${index}`);
-            const progress = document.getElementById(`prog-${index}`);
-            const overlay = document.getElementById(`overlay-${index}`);
-
-            // Reset state
-            card.classList.remove('failed');
-            card.classList.add('loading');
-            tabStates[index] = {
-                loaded: false,
-                failed: false,
-                startTime: Date.now(),
-                loadTime: null
-            };
-
-            // Reset overlay
-            if (overlay) {
-                overlay.innerHTML = '<div class="text-xs text-gray-300">Loading...</div>';
-                overlay.style.opacity = "1";
-                overlay.style.display = "flex";
-            }
-
-            // Reset progress
-            if (progress) {
-                progress.style.width = "0%";
-            }
-
-            // Update counts
-            failedCount--;
-            loadingCount++;
-            updateCounts();
-
-            // Reload the tab
-            loadTabContent(index, iframe, progress, overlay, card);
-        }
-
-        // Handle scroll for lazy loading
-        function handleScroll() {
-            if (!lazyLoadMode) return;
-
-            const scrollPosition = window.innerHeight + window.scrollY;
-            const pageHeight = document.documentElement.scrollHeight;
-            const scrollThreshold = pageHeight * 0.8;
-
-            // Load more batches when scrolled near the bottom
-            if (scrollPosition >= scrollThreshold) {
-                const loadedTabs = document.querySelectorAll('.window-card').length;
-                if (loadedTabs < TOTAL_TABS) {
-                    loadBatch();
-                }
-            }
-        }
-
-        // Update count displays
-        function updateCounts() {
-            document.getElementById('loaded-count').textContent = loadedCount;
-            document.getElementById('loading-count').textContent = loadingCount;
-            document.getElementById('failed-count').textContent = failedCount;
-
-            // Update speed tag based on loading status
-            const speedTag = document.getElementById('speed-tag');
-            if (loadingCount > 0) {
-                speedTag.textContent = `LOADING ${loadedCount}/${TOTAL_TABS} TABS...`;
-                speedTag.style.color = "var(--turbo-blue)";
-            } else if (loadedCount === TOTAL_TABS) {
-                speedTag.textContent = `ALL ${TOTAL_TABS} TABS LOADED!`;
-                speedTag.style.color = "var(--turbo-green)";
-            }
-        }
-
-        // Update active tabs counter
-        function updateActiveTabs() {
-            const activeTabs = document.querySelectorAll('.window-card').length;
-            document.getElementById('active-tabs').textContent = activeTabs;
-        }
-
-        // Update performance display
-        function updatePerformance() {
-            const performanceScore = perfMonitor.getPerformanceScore();
-            const indicator = document.getElementById('performance-indicator');
-            const performanceText = document.getElementById('performance-text');
-
-            // Update indicator
-            indicator.style.transform = `scaleX(${performanceScore})`;
-
-            // Update text
-            if (performanceScore >= 0.9) {
-                indicator.style.backgroundColor = "var(--turbo-green)";
-                performanceText.textContent = "Excellent";
-                performanceText.style.color = "var(--turbo-green)";
-            } else if (performanceScore >= 0.7) {
-                indicator.style.backgroundColor = "#f59e0b";
-                performanceText.textContent = "Good";
-                performanceText.style.color = "#f59e0b";
-            } else if (performanceScore >= 0.5) {
-                indicator.style.backgroundColor = "#f59e0b";
-                performanceText.textContent = "Fair";
-                performanceText.style.color = "#f59e0b";
-            } else {
-                indicator.style.backgroundColor = "var(--turbo-red)";
-                performanceText.textContent = "Slow";
-                performanceText.style.color = "var(--turbo-red)";
-            }
-        }
-
-        // Toggle lazy load mode
-        function toggleLoadMode() {
-            lazyLoadMode = !lazyLoadMode;
-            const button = document.getElementById('load-mode-btn');
-
-            if (lazyLoadMode) {
-                button.textContent = "LAZY LOAD";
-                button.classList.remove('bg-blue-600');
-                button.classList.add('bg-gray-800');
-            } else {
-                button.textContent = "EAGER LOAD";
-                button.classList.remove('bg-gray-800');
-                button.classList.add('bg-blue-600');
-                // If eager load is enabled, load all remaining tabs
-                const loadedTabs = document.querySelectorAll('.window-card').length;
-                if (loadedTabs < TOTAL_TABS) {
-                    // Load all remaining tabs at once
-                    while (loadedTabs < TOTAL_TABS) {
-                        loadBatch();
-                    }
-                }
-            }
-        }
-
-        // Refresh all tabs
-        function turboRefresh() {
-            const speedTag = document.getElementById('speed-tag');
-            speedTag.textContent = "PURGING CACHE & RESTARTING...";
-            speedTag.style.color = "#f59e0b";
-
-            // Clear the grid
-            const grid = document.getElementById('master-grid');
+        function createTabs() {
+            const grid = document.getElementById('grid');
             grid.innerHTML = '';
 
-            // Reset counters
-            loadedCount = 0;
-            loadingCount = 0;
-            failedCount = 0;
-            currentBatch = 0;
-            tabStates = {};
-            perfMonitor.loadedTimes = [];
-            perfMonitor.startTime = Date.now();
+            for (let i = 0; i < TOTAL_TABS; i++) {
+                const tab = document.createElement('div');
+                tab.className = 'tab';
+                tab.id = `tab-${i}`;
+                tab.style.animationDelay = `${(i % 20) * 3}ms`;
 
-            // Reload
-            updateCounts();
-            loadFirstBatch();
-        }
+                tab.innerHTML = `
+                    <div class="status-dot status-loading"></div>
+                    <div class="status-type">Loading...</div>
+                    <div class="placeholder">
+                        <div class="placeholder-icon">▶</div>
+                        Video Ad
+                    </div>
+                    <iframe id="frame-${i}"></iframe>
+                    <div class="progress" id="progress-${i}"></div>
+                `;
 
-        // Connection monitoring for global stability
-        function startConnectionMonitor() {
-            // Show connection status
-            const connectionStatus = document.getElementById('connection-status');
-            connectionStatus.classList.remove('hidden');
-
-            // Test connection periodically
-            connectionTestInterval = setInterval(testConnection, 10000);
-
-            // Initial test
-            setTimeout(testConnection, 1000);
-        }
-
-        // Test connection quality
-        function testConnection() {
-            const testUrl = "https://www.effectivegatecpm.com/favicon.ico?t=" + Date.now();
-            const startTime = Date.now();
-            const connectionDot = document.getElementById('connection-dot');
-            const connectionText = document.getElementById('connection-text');
-
-            fetch(testUrl, {
-                    mode: 'no-cors',
-                    cache: 'no-store'
-                })
-                .then(() => {
-                    const latency = Date.now() - startTime;
-                    updateConnectionStatus(latency);
-                })
-                .catch(() => {
-                    // If main URL fails, try alternative approach
-                    updateConnectionStatus(9999); // Very poor connection
-                });
-        }
-
-        // Update connection status display
-        function updateConnectionStatus(latency) {
-            const connectionDot = document.getElementById('connection-dot');
-            const connectionText = document.getElementById('connection-text');
-            const connectionStatus = document.getElementById('connection-status');
-
-            // Remove all classes
-            connectionDot.classList.remove('connection-good', 'connection-slow', 'connection-poor');
-
-            if (latency < 300) {
-                connectionDot.classList.add('connection-good');
-                connectionText.textContent = `Connection: Good (${latency}ms)`;
-                connectionStatus.style.borderColor = "var(--turbo-green)";
-            } else if (latency < 1000) {
-                connectionDot.classList.add('connection-slow');
-                connectionText.textContent = `Connection: Slow (${latency}ms)`;
-                connectionStatus.style.borderColor = "#f59e0b";
-            } else {
-                connectionDot.classList.add('connection-poor');
-                connectionText.textContent = `Connection: Poor (${latency > 5000 ? '>5s' : latency + 'ms'})`;
-                connectionStatus.style.borderColor = "var(--turbo-red)";
-
-                // If connection is poor, adjust loading strategy
-                if (latency > 2000 && BATCH_SIZE > 10) {
-                    console.log("Poor connection detected, consider reducing batch size");
-                }
+                grid.appendChild(tab);
             }
         }
 
-        // Toggle connection test display
-        function toggleConnectionTest() {
-            const connectionStatus = document.getElementById('connection-status');
-            if (connectionStatus.classList.contains('hidden')) {
-                connectionStatus.classList.remove('hidden');
-                startConnectionMonitor();
-            } else {
-                connectionStatus.classList.add('hidden');
-                if (connectionTestInterval) {
-                    clearInterval(connectionTestInterval);
-                }
+        function loadAllTabs() {
+            const batches = Math.ceil(TOTAL_TABS / BATCH_SIZE);
+
+            for (let batch = 0; batch < batches; batch++) {
+                setTimeout(() => {
+                    const start = batch * BATCH_SIZE;
+                    const end = Math.min(start + BATCH_SIZE, TOTAL_TABS);
+
+                    for (let i = start; i < end; i++) {
+                        setTimeout(() => {
+                            loadTab(i);
+                            openingTabs++;
+                            updateCounters();
+                        }, (i - start) * TAB_DELAY);
+                    }
+                }, batch * BATCH_DELAY);
             }
         }
 
-        // Initialize on load
-        window.onload = init;
+        function loadTab(index) {
+            const tab = document.getElementById(`tab-${index}`);
+            const iframe = document.getElementById(`frame-${index}`);
+            const progress = document.getElementById(`progress-${index}`);
+            const statusDot = tab.querySelector('.status-dot');
+            const statusType = tab.querySelector('.status-type');
+
+            if (!tab) return;
+
+            // Get the current link (rotating through 3 links)
+            const currentLink = LINKS[linkIndex % LINKS.length];
+            linkIndex++;
+
+            // Update status type to show which link is opening
+            let linkType = "";
+            if (currentLink.includes("xfgugi2e9r")) linkType = "Type A";
+            else if (currentLink.includes("j81bwakgtr")) linkType = "Type B";
+            else if (currentLink.includes("q488gz0f7")) linkType = "Type C";
+
+            if (statusType) {
+                statusType.textContent = linkType;
+            }
+
+            // Start visual progress
+            let visualProgress = 0;
+            const progressInterval = setInterval(() => {
+                if (visualProgress < 90) {
+                    visualProgress += 15 + Math.random() * 15;
+                    progress.style.width = `${Math.min(visualProgress, 90)}%`;
+                }
+            }, 20);
+
+            // Load actual content
+            const url = `${currentLink}&t=${Date.now()}&tab=${index}&r=${Math.random()}`;
+            iframe.src = url;
+
+            // Mark as loaded quickly
+            const loadDelay = 80 + Math.random() * 200;
+
+            setTimeout(() => {
+                clearInterval(progressInterval);
+
+                // Complete visual loading
+                progress.style.width = '100%';
+                tab.classList.add('loaded');
+
+                // Update status
+                if (statusDot) {
+                    statusDot.classList.remove('status-loading');
+                    statusDot.classList.add('status-loaded');
+                }
+
+                // Update counters
+                openingTabs--;
+                loadedTabs++;
+                updateCounters();
+                updateTitle();
+
+            }, loadDelay);
+
+            // Timeout fallback
+            setTimeout(() => {
+                clearInterval(progressInterval);
+                if (!tab.classList.contains('loaded')) {
+                    tab.classList.add('loaded');
+                    progress.style.background = '#ff4444';
+                    openingTabs--;
+                    loadedTabs++;
+                    updateCounters();
+                    updateTitle();
+                }
+            }, 3000);
+        }
+
+        function updateCounters() {
+            document.getElementById('loaded-count').textContent = loadedTabs;
+            document.getElementById('opening-count').textContent = openingTabs;
+
+            // Update status bar text
+            const statusElement = document.querySelector('.loading-status');
+            if (openingTabs > 0) {
+                statusElement.textContent = 'Opening Tabs...';
+                statusElement.style.color = '#3b82f6';
+            } else if (loadedTabs === TOTAL_TABS) {
+                statusElement.textContent = 'Complete! Ready to Earn';
+                statusElement.style.color = '#00ff88';
+            }
+        }
+
+        function updateTitle() {
+            let titleText = `Earn ₱199 by Watching Videos`;
+
+            if (openingTabs > 0) {
+                titleText += ` | Opening: ${openingTabs} | Loaded: ${loadedTabs}`;
+            } else if (loadedTabs === TOTAL_TABS) {
+                titleText += ` | Complete! Start Watching`;
+            } else {
+                titleText += ` | Loaded: ${loadedTabs}`;
+            }
+
+            document.title = titleText;
+        }
+
+        // Handle tab visibility for performance
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                // Page is hidden - reduce activity
+                console.log('Page hidden, reducing activity');
+            } else {
+                // Page is visible again
+                console.log('Page visible again');
+            }
+        });
     </script>
 </body>
 
 </html>
-
-
-
-
-
