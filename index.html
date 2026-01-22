@@ -1,223 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-    <meta name="google-site-verification" content="I6mj2Xin2srj3bEdDQEZ_L0GtidF2ZxyPVZP-Q6KuzQ" />
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>You can earn 2.5 dollars on watching a video and withdraw the earned money</title>
-
-    <!-- Google tag (gtag.js) -->
-
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-G0FJCMYEKM"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
-
-        gtag('config', 'G-G0FJCMYEKM');
-    </script>
-
-
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-G0FJCMYEKM"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
-        gtag('config', 'G-G0FJCMYEKM');
-    </script>
-
+    <title>Quantum High-Yield Engine</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        body { background: #000; color: #00ff88; font-family: monospace; overflow: hidden; }
+        .node-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 5px; padding: 10px; }
+        .node { 
+            background: #050505; border: 1px solid #111; height: 100px; 
+            border-radius: 5px; position: relative; overflow: hidden; 
         }
+        iframe { 
+            width: 1400px; height: 1000px; 
+            transform: scale(0.065); transform-origin: 0 0; 
+            border: none; opacity: 0; pointer-events: auto;
+        }
+        .active iframe { opacity: 1; }
+        .active { border-color: #00ff88; }
         
-        body {
-            background: #000;
-            color: #fff;
-            font-family: -apple-system, sans-serif;
-            overflow-x: hidden;
+        /* Ghost Click Visualizer (Optional) */
+        .click-pulse {
+            position: absolute; width: 10px; height: 10px;
+            background: rgba(0, 255, 136, 0.5); border-radius: 50%;
+            pointer-events: none; z-index: 100; animation: pulse 0.5s ease-out;
         }
-        /* The Secret for Counting: Make iframes feel "Large" but look "Small" */
-        
-        .node-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-            gap: 8px;
-            padding: 15px;
-        }
-        
-        .node-wrapper {
-            background: #0a0a0a;
-            border: 1px solid #1a1a1a;
-            height: 140px;
-            border-radius: 10px;
-            position: relative;
-            overflow: hidden;
-            transition: border-color 0.5s ease;
-        }
-        
-        .node-wrapper.active {
-            border-color: #00ff88;
-            box-shadow: 0 0 10px rgba(0, 255, 136, 0.15);
-        }
-        
-        iframe {
-            width: 1200px;
-            /* High-res internal viewport */
-            height: 1000px;
-            transform: scale(0.091);
-            /* Shrinks high-res to fit box */
-            transform-origin: 0 0;
-            border: none;
-            opacity: 0;
-            transition: opacity 1s;
-        }
-        
-        .active iframe {
-            opacity: 1;
-        }
-        
-        .progress-indicator {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            height: 3px;
-            width: 0%;
-            background: #3b82f6;
-            transition: width 0.3s;
-        }
-        
-        .active .progress-indicator {
-            background: #00ff88;
-            width: 100% !important;
-        }
-        
-        @media (max-width: 600px) {
-            .node-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
+        @keyframes pulse { from { transform: scale(1); opacity: 1; } to { transform: scale(4); opacity: 0; } }
     </style>
 </head>
-
 <body>
 
-    <header class="sticky top-0 z-50 bg-black/90 border-b border-gray-800 p-4 backdrop-blur-md">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div>
-                <h1 class="text-[10px] font-black tracking-widest text-green-500 uppercase">: <span id="overall-status">Initializing</span></h1>
-                <p class="text-[9px] text-gray-500 mt-1 font-mono">You can earn 2.5 dollars on watching a video and withdraw the earned money...</p>
-            </div>
-            <div class="flex items-center gap-3">
-                <div class="text-right">
-                    <span id="nodes-loaded" class="text-xs font-bold">0</span><span class="text-xs text-gray-500">/25</span>
-                </div>
-                <button onclick="location.reload()" class="bg-blue-600 px-3 py-1 rounded text-[10px] font-bold uppercase">Manual Reset</button>
-            </div>
-        </div>
-    </header>
+<div class="p-3 border-b border-green-900/30 flex justify-between items-center bg-black/80 backdrop-blur-md sticky top-0 z-50">
+    <div class="text-[10px] font-bold tracking-tighter uppercase">
+        System: <span id="status" class="text-blue-500">Injecting Input...</span>
+    </div>
+    <div class="text-xs font-mono">COUNT: <span id="loaded">0</span>/50</div>
+</div>
 
-    <div id="main-grid" class="node-grid"></div>
+<div id="grid" class="node-container"></div>
 
-    <script>
-        /**
-         * MASTER CONFIGURATION
-         */
-        const CORE_CONFIG = {
-            targetUrl: "https://www.effectivegatecpm.com/jwi8z6qivr?key=61275ef83142835aded022a273c53d3b",
-            totalNodes: 50,
-            batchDelay: 500, // Human-like loading speed
-            autoRefreshMins: 12
-        };
+<script>
+    const TARGET = "https://www.effectivegatecpm.com/jwi8z6qivr?key=61275ef83142835aded022a273c53d3b";
+    let count = 0;
 
-        let loadedCount = 0;
+    // 1. FORCE VISIBILITY BYPASS
+    Object.defineProperty(document, 'visibilityState', {get: () => 'visible'});
+    Object.defineProperty(document, 'hidden', {get: () => false});
 
-        // Start Auto-Engine
-        window.addEventListener('DOMContentLoaded', () => {
-            const grid = document.getElementById('main-grid');
-            for (let i = 0; i < CORE_CONFIG.totalNodes; i++) {
-                setTimeout(() => spawnStealthNode(i, grid), i * CORE_CONFIG.batchDelay);
-            }
-        });
+    // 2. SPAWN NODES
+    const init = async () => {
+        const grid = document.getElementById('grid');
+        for (let i = 0; i < 50; i++) {
+            const div = document.createElement('div');
+            div.className = "node";
+            div.innerHTML = `<iframe id="f-${i}" sandbox="allow-scripts allow-same-origin allow-popups" src="about:blank"></iframe>`;
+            grid.appendChild(div);
 
-        function spawnStealthNode(id, container) {
-            const wrapper = document.createElement('div');
-            wrapper.className = "node-wrapper";
-            wrapper.innerHTML = `
-                <div class="absolute inset-0 flex items-center justify-center text-[8px] text-gray-800">VAULT_${id}</div>
-                <iframe id="frame-${id}" sandbox="allow-scripts allow-same-origin allow-forms" allow="autoplay; encrypted-media"></iframe>
-                <div id="prog-${id}" class="progress-indicator"></div>
-            `;
-            container.appendChild(wrapper);
+            const f = document.getElementById(`f-${i}`);
+            // Unique signature for every tab to bypass duplicate IP checks
+            const sig = `&_id=${i}&_v=${Math.random().toString(36).slice(7)}`;
+            f.src = TARGET + sig;
 
-            const frame = document.getElementById(`frame-${id}`);
-            const progress = document.getElementById(`prog-${id}`);
-
-            // FINGERPRINT SPOOFING
-            const hardware = {
-                cpu: [2, 4, 8][Math.floor(Math.random() * 3)],
-                mem: [4, 8, 16][Math.floor(Math.random() * 3)],
-                sid: Math.random().toString(36).substr(2, 9)
+            f.onload = () => {
+                count++;
+                div.classList.add('active');
+                document.getElementById('loaded').innerText = count;
+                // Start Simulated Interaction for this specific node
+                startGhostInteraction(div);
             };
-
-            // Inject Stealth URL
-            const finalUrl = `${CORE_CONFIG.targetUrl}&_cpu=${hardware.cpu}&_mem=${hardware.mem}&_sid=${hardware.sid}&_t=${Date.now()}`;
-
-            frame.src = finalUrl;
-
-            frame.onload = () => {
-                loadedCount++;
-                wrapper.classList.add('active');
-                document.getElementById('nodes-loaded').innerText = loadedCount;
-                if (loadedCount === CORE_CONFIG.totalNodes) {
-                    document.getElementById('overall-status').innerText = "All Nodes Verified";
-                }
-            };
-
-            // Fake progress animation
-            setTimeout(() => {
-                if (!wrapper.classList.contains('active')) progress.style.width = '70%';
-            }, 200);
+            await new Promise(r => setTimeout(r, 200));
         }
+        document.getElementById('status').innerText = "Yielding Profits";
+        document.getElementById('status').className = "text-green-500";
+    };
 
-        /**
-         * THE "COUNT" FIX: FORCE VISIBILITY
-         * This tricks the ad network into thinking the page is ALWAYS focused and visible.
-         */
-        Object.defineProperty(document, 'visibilityState', {
-            value: 'visible',
-            writable: false
-        });
-        Object.defineProperty(document, 'hidden', {
-            value: false,
-            writable: false
-        });
-
-        // Simulate random interaction to keep ads alive
+    // 3. THE "COUNTING" FIX: GHOST INTERACTION
+    // This moves a virtual "finger" inside the box to trick the ad into counting the view.
+    function startGhostInteraction(node) {
         setInterval(() => {
-            window.dispatchEvent(new Event('mousemove'));
-            window.dispatchEvent(new Event('scroll'));
-        }, 3000);
+            // Simulate a "Focus" and "Hover" event
+            node.dispatchEvent(new MouseEvent('mouseenter'));
+            
+            // Randomly simulate a "Pulse" to wake up the ad's JavaScript
+            const pulse = document.createElement('div');
+            pulse.className = "click-pulse";
+            pulse.style.left = Math.random() * 80 + 'px';
+            pulse.style.top = Math.random() * 80 + 'px';
+            node.appendChild(pulse);
+            setTimeout(() => pulse.remove(), 500);
 
-        // Auto-Purge to refresh traffic logs every 12 mins
-        setInterval(() => {
-            document.body.style.opacity = "0.3";
-            location.reload();
-        }, CORE_CONFIG.autoRefreshMins * 60 * 1000);
-    </script>
+        }, 5000 + (Math.random() * 5000));
+    }
+
+    init();
+
+    // Auto-Reload to clear session cookies and restart the "Count" cycle
+    setTimeout(() => location.reload(), 15 * 60 * 1000);
+</script>
 </body>
-
 </html>
-
