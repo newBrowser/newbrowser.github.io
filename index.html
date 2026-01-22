@@ -3,100 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Quantum High-Yield Engine</title>
+    <title>High-Yield Stealth Engine</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background: #000; color: #00ff88; font-family: monospace; overflow: hidden; }
-        .node-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 5px; padding: 10px; }
+        body { background: #000; color: #fff; font-family: sans-serif; }
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; padding: 15px; }
         .node { 
-            background: #050505; border: 1px solid #111; height: 100px; 
-            border-radius: 5px; position: relative; overflow: hidden; 
+            background: #0a0a0a; border: 2px solid #1a1a1a; height: 150px; 
+            border-radius: 12px; position: relative; overflow: hidden;
         }
+        /* The "Active View" Fix: Ensures ads think they are 100% visible */
         iframe { 
-            width: 1400px; height: 1000px; 
-            transform: scale(0.065); transform-origin: 0 0; 
-            border: none; opacity: 0; pointer-events: auto;
+            width: 100%; height: 100%; border: none;
+            opacity: 0; transition: opacity 1s;
+            pointer-events: auto;
         }
         .active iframe { opacity: 1; }
-        .active { border-color: #00ff88; }
+        .active { border-color: #00ff88 !important; }
         
-        /* Ghost Click Visualizer (Optional) */
-        .click-pulse {
-            position: absolute; width: 10px; height: 10px;
-            background: rgba(0, 255, 136, 0.5); border-radius: 50%;
-            pointer-events: none; z-index: 100; animation: pulse 0.5s ease-out;
+        /* Interaction Overlay to trigger "Human" detection */
+        .touch-layer {
+            position: absolute; inset: 0; z-index: 10;
+            background: transparent; pointer-events: none;
         }
-        @keyframes pulse { from { transform: scale(1); opacity: 1; } to { transform: scale(4); opacity: 0; } }
     </style>
 </head>
 <body>
 
-<div class="p-3 border-b border-green-900/30 flex justify-between items-center bg-black/80 backdrop-blur-md sticky top-0 z-50">
-    <div class="text-[10px] font-bold tracking-tighter uppercase">
-        System: <span id="status" class="text-blue-500">Injecting Input...</span>
+<header class="p-4 bg-black border-b border-gray-900 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <div>
+            <h1 class="text-xs font-bold text-green-500 uppercase tracking-tighter">Counting Engine Active</h1>
+            <p id="status" class="text-[9px] text-gray-500 font-mono">BYPASSING VIEW-CHECK...</p>
+        </div>
+        <div class="text-right text-[10px] font-bold text-blue-500">
+            LOADED: <span id="count">0</span>/25
+        </div>
     </div>
-    <div class="text-xs font-mono">COUNT: <span id="loaded">0</span>/50</div>
-</div>
+</header>
 
-<div id="grid" class="node-container"></div>
+<div id="grid" class="grid-container"></div>
 
 <script>
-    const TARGET = "https://www.effectivegatecpm.com/jwi8z6qivr?key=61275ef83142835aded022a273c53d3b";
-    let count = 0;
-
-    // 1. FORCE VISIBILITY BYPASS
-    Object.defineProperty(document, 'visibilityState', {get: () => 'visible'});
-    Object.defineProperty(document, 'hidden', {get: () => false});
-
-    // 2. SPAWN NODES
-    const init = async () => {
-        const grid = document.getElementById('grid');
-        for (let i = 0; i < 50; i++) {
-            const div = document.createElement('div');
-            div.className = "node";
-            div.innerHTML = `<iframe id="f-${i}" sandbox="allow-scripts allow-same-origin allow-popups" src="about:blank"></iframe>`;
-            grid.appendChild(div);
-
-            const f = document.getElementById(`f-${i}`);
-            // Unique signature for every tab to bypass duplicate IP checks
-            const sig = `&_id=${i}&_v=${Math.random().toString(36).slice(7)}`;
-            f.src = TARGET + sig;
-
-            f.onload = () => {
-                count++;
-                div.classList.add('active');
-                document.getElementById('loaded').innerText = count;
-                // Start Simulated Interaction for this specific node
-                startGhostInteraction(div);
-            };
-            await new Promise(r => setTimeout(r, 200));
-        }
-        document.getElementById('status').innerText = "Yielding Profits";
-        document.getElementById('status').className = "text-green-500";
+    const CONFIG = {
+        url: "https://www.effectivegatecpm.com/jwi8z6qivr?key=61275ef83142835aded022a273c53d3b",
+        total: 25,
+        delay: 300
     };
 
-    // 3. THE "COUNTING" FIX: GHOST INTERACTION
-    // This moves a virtual "finger" inside the box to trick the ad into counting the view.
-    function startGhostInteraction(node) {
-        setInterval(() => {
-            // Simulate a "Focus" and "Hover" event
-            node.dispatchEvent(new MouseEvent('mouseenter'));
-            
-            // Randomly simulate a "Pulse" to wake up the ad's JavaScript
-            const pulse = document.createElement('div');
-            pulse.className = "click-pulse";
-            pulse.style.left = Math.random() * 80 + 'px';
-            pulse.style.top = Math.random() * 80 + 'px';
-            node.appendChild(pulse);
-            setTimeout(() => pulse.remove(), 500);
+    let loaded = 0;
 
+    window.onload = () => {
+        const grid = document.getElementById('grid');
+        for (let i = 0; i < CONFIG.total; i++) {
+            setTimeout(() => spawnNode(i, grid), i * CONFIG.delay);
+        }
+    };
+
+    function spawnNode(id, container) {
+        const div = document.createElement('div');
+        div.className = "node";
+        div.innerHTML = `
+            <div class="touch-layer" id="touch-${id}"></div>
+            <iframe id="f-${id}" 
+                    allow="autoplay; fullscreen" 
+                    sandbox="allow-scripts allow-same-origin allow-forms"
+                    src="about:blank"></iframe>
+        `;
+        container.appendChild(div);
+
+        const frame = document.getElementById(`f-${id}`);
+        
+        // --- THE "COUNT" FIXES ---
+        
+        // 1. Random Interaction Simulation
+        setInterval(() => {
+            if(div.classList.contains('active')) {
+                // Mimics a "Window Focus" event so the ad thinks it's being watched
+                frame.contentWindow.postMessage('focus', '*'); 
+            }
         }, 5000 + (Math.random() * 5000));
+
+        // 2. Delayed Source Injection (Bypasses initial Bot-Check)
+        setTimeout(() => {
+            const stealthUrl = `${CONFIG.url}&view=true&id=${id}&r=${Math.random().toString(36).substr(2, 9)}`;
+            frame.src = stealthUrl;
+        }, 100);
+
+        frame.onload = () => {
+            loaded++;
+            div.classList.add('active');
+            document.getElementById('count').innerText = loaded;
+            document.getElementById('status').innerText = "V-STATUS: VALIDATING VIEWS...";
+        };
     }
 
-    init();
-
-    // Auto-Reload to clear session cookies and restart the "Count" cycle
-    setTimeout(() => location.reload(), 15 * 60 * 1000);
+    // 3. Page Visibility Fix (Keeps ads running even if you switch tabs)
+    Object.defineProperty(document, 'visibilityState', {value: 'visible', writable: false});
+    Object.defineProperty(document, 'hidden', {value: false, writable: false});
 </script>
 </body>
 </html>
