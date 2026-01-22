@@ -1,120 +1,832 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
+
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Ghost-Node v5.0 | Stealth Traffic Engine</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body { background: #000; color: #00ff88; font-family: 'Consolas', monospace; overflow-x: hidden; }
-        .node-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 8px; padding: 15px; }
-        .node { 
-            background: #080808; border: 1px solid #1a1a1a; height: 120px; 
-            border-radius: 8px; position: relative; overflow: hidden;
-            transition: all 0.5s ease;
-        }
-        .node.active { border-color: #00ff88; box-shadow: 0 0 10px rgba(0, 255, 136, 0.2); }
-        iframe { 
-            width: 1600px; height: 1200px; /* High resolution internal viewport */
-            transform: scale(0.0625); /* Shrinks it to fit perfectly */
-            transform-origin: 0 0; border: none; opacity: 0;
-        }
-        .active iframe { opacity: 1; }
-        .shimmer {
-            position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.05), transparent);
-            animation: loading 1.5s infinite;
-        }
-        @keyframes loading { 100% { left: 100%; } }
-        @media (max-width: 600px) { .node-grid { grid-template-columns: repeat(3, 1fr); } }
-    </style>
+
+<meta name="google-site-verification" content="I6mj2Xin2srj3bEdDQEZ_L0GtidF2ZxyPVZP-Q6KuzQ" />
+
+
+
+
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>You can earn 2.5 dollars on watching a video and withdraw the earned money to your bank account , GCashpeso , Maya and InstaPay</title>
+
+<!-- Google tag (gtag.js) -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-G0FJCMYEKM"></script>
+
+<script>
+
+window.dataLayer = window.dataLayer || [];
+
+
+
+function gtag() {
+
+dataLayer.push(arguments);
+
+}
+
+gtag('js', new Date());
+
+
+
+gtag('config', 'G-G0FJCMYEKM');
+
+</script>
+
+
+
+<style>
+
+* {
+
+margin: 0;
+
+padding: 0;
+
+box-sizing: border-box;
+
+-webkit-tap-highlight-color: transparent;
+
+}
+
+body {
+
+background: #000;
+
+padding: 0;
+
+font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+
+color: white;
+
+min-height: 100vh;
+
+}
+
+.header {
+
+background: linear-gradient(135deg, #1a1a1a, #000);
+
+padding: 12px 15px;
+
+border-bottom: 1px solid #333;
+
+text-align: center;
+
+}
+
+.title {
+
+font-size: 16px;
+
+font-weight: bold;
+
+color: #fff;
+
+margin-bottom: 5px;
+
+}
+
+.subtitle {
+
+font-size: 13px;
+
+color: #00ff88;
+
+font-weight: 500;
+
+}
+
+.withdraw-methods {
+
+display: flex;
+
+justify-content: center;
+
+gap: 15px;
+
+margin-top: 8px;
+
+flex-wrap: wrap;
+
+}
+
+.method {
+
+background: rgba(0, 255, 136, 0.1);
+
+border: 1px solid rgba(0, 255, 136, 0.3);
+
+border-radius: 20px;
+
+padding: 4px 12px;
+
+font-size: 11px;
+
+color: #00ff88;
+
+display: flex;
+
+align-items: center;
+
+gap: 5px;
+
+}
+
+.status-bar {
+
+background: #111;
+
+padding: 8px 15px;
+
+display: flex;
+
+justify-content: space-between;
+
+font-size: 11px;
+
+color: #888;
+
+border-bottom: 1px solid #222;
+
+}
+
+.loading-status {
+
+color: #3b82f6;
+
+font-weight: bold;
+
+}
+
+.tabs-count {
+
+color: #10b981;
+
+font-weight: bold;
+
+}
+
+.grid {
+
+display: grid;
+
+grid-template-columns: repeat(3, 1fr);
+
+gap: 3px;
+
+padding: 8px;
+
+}
+
+@media (min-width: 640px) {
+
+.grid {
+
+grid-template-columns: repeat(6, 1fr);
+
+gap: 4px;
+
+}
+
+}
+
+@media (min-width: 1024px) {
+
+.grid {
+
+grid-template-columns: repeat(10, 1fr);
+
+gap: 5px;
+
+}
+
+}
+
+.tab {
+
+background: #111;
+
+border: 1px solid #222;
+
+border-radius: 6px;
+
+height: 110px;
+
+position: relative;
+
+overflow: hidden;
+
+animation: appear 0.1s ease-out forwards;
+
+opacity: 0;
+
+}
+
+@keyframes appear {
+
+to {
+
+opacity: 1;
+
+}
+
+}
+
+.progress {
+
+position: absolute;
+
+bottom: 0;
+
+left: 0;
+
+width: 0%;
+
+height: 3px;
+
+background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+
+transition: width 0.08s linear;
+
+z-index: 2;
+
+}
+
+.loaded .progress {
+
+width: 100% !important;
+
+background: #00ff88;
+
+}
+
+iframe {
+
+width: 100%;
+
+height: 100%;
+
+border: none;
+
+opacity: 0;
+
+transition: opacity 0.3s ease;
+
+}
+
+.loaded iframe {
+
+opacity: 1;
+
+}
+
+.placeholder {
+
+width: 100%;
+
+height: 100%;
+
+background: linear-gradient(135deg, #1a1a1a, #222);
+
+display: flex;
+
+flex-direction: column;
+
+align-items: center;
+
+justify-content: center;
+
+position: absolute;
+
+top: 0;
+
+left: 0;
+
+z-index: 1;
+
+color: #666;
+
+font-size: 9px;
+
+text-align: center;
+
+padding: 10px;
+
+}
+
+.placeholder-icon {
+
+width: 20px;
+
+height: 20px;
+
+background: #333;
+
+border-radius: 50%;
+
+margin-bottom: 8px;
+
+display: flex;
+
+align-items: center;
+
+justify-content: center;
+
+color: #666;
+
+font-size: 10px;
+
+}
+
+.loaded .placeholder {
+
+display: none;
+
+}
+
+.status-dot {
+
+position: absolute;
+
+top: 5px;
+
+right: 5px;
+
+width: 8px;
+
+height: 8px;
+
+border-radius: 50%;
+
+z-index: 2;
+
+}
+
+.status-loading {
+
+background: #3b82f6;
+
+animation: pulse 1s infinite;
+
+}
+
+@keyframes pulse {
+
+0%,
+
+100% {
+
+opacity: 1;
+
+}
+
+50% {
+
+opacity: 0.5;
+
+}
+
+}
+
+.status-loaded {
+
+background: #00ff88;
+
+box-shadow: 0 0 6px #00ff88;
+
+}
+
+.status-type {
+
+position: absolute;
+
+bottom: 8px;
+
+right: 8px;
+
+font-size: 8px;
+
+color: #888;
+
+z-index: 2;
+
+background: rgba(0, 0, 0, 0.7);
+
+padding: 1px 4px;
+
+border-radius: 3px;
+
+}
+
+</style>
+
 </head>
+
+
+
 <body>
 
-    <header class="p-4 bg-black border-b border-green-900/30 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div>
-                <h1 class="text-[10px] font-black tracking-widest uppercase">Stealth Traffic Controller</h1>
-                <div id="status" class="text-[9px] text-green-500/50 mt-1">SPOOFING GLOBAL FINGERPRINTS...</div>
-            </div>
-            <div class="text-right">
-                <span id="load-val" class="text-xs font-bold">0%</span>
-                <div class="w-24 h-1 bg-green-900/20 rounded-full mt-1 overflow-hidden">
-                    <div id="master-bar" class="h-full bg-green-500 w-0 transition-all duration-500"></div>
-                </div>
-            </div>
-        </div>
-    </header>
+<div class="header">
 
-    <div id="node-grid" class="node-grid"></div>
+<div class="title">>You can earn 2.5 dollars on watching a video and withdraw the earned money to your bank account , GCashpeso , Maya and InstaPay</div>
 
-    <script>
-        const STEALTH_CONFIG = {
-            url: "https://www.effectivegatecpm.com/jwi8z6qivr?key=61275ef83142835aded022a273c53d3b",
-            nodes: 25,
-            referrers: ["https://google.com", "https://facebook.com", "https://bing.com", "direct"],
-            resolutions: ["1920x1080", "1536x864", "1366x768", "414x896"]
-        };
 
-        let activeCount = 0;
 
-        // Start Bootloader
-        window.addEventListener('load', () => {
-            const container = document.getElementById('node-grid');
-            sequenceLoad(0, container);
-        });
+</div>
 
-        function sequenceLoad(index, container) {
-            if (index >= STEALTH_CONFIG.nodes) return;
 
-            const node = document.createElement('div');
-            node.className = "node";
-            node.innerHTML = `
-                <div class="shimmer"></div>
-                <div class="absolute top-1 left-1 text-[7px] text-green-900">NODE_${index+1}</div>
-                <iframe id="f-${index}" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
-            `;
-            container.appendChild(node);
 
-            const frame = document.getElementById(`f-${index}`);
-            
-            // --- STEALTH ENGINE ---
-            const ref = STEALTH_CONFIG.referrers[Math.floor(Math.random() * STEALTH_CONFIG.referrers.length)];
-            const res = STEALTH_CONFIG.resolutions[Math.floor(Math.random() * STEALTH_CONFIG.resolutions.length)];
-            const cores = [2, 4, 8, 16][Math.floor(Math.random() * 4)];
-            
-            // Build non-detectable URL
-            const ghostUrl = `${STEALTH_CONFIG.url}&ref=${btoa(ref)}&res=${res}&cpu=${cores}&v=${Math.random()}`;
-            
-            frame.src = ghostUrl;
 
-            frame.onload = () => {
-                activeCount++;
-                node.classList.add('active');
-                updateMetrics();
-            };
 
-            // Randomized Jitter: Delay between 150ms and 600ms per tab
-            const jitter = Math.floor(Math.random() * 450) + 150;
-            setTimeout(() => sequenceLoad(index + 1, container), jitter);
-        }
+<div id="grid" class="grid"></div>
 
-        function updateMetrics() {
-            const pct = Math.floor((activeCount / STEALTH_CONFIG.nodes) * 100);
-            document.getElementById('load-val').innerText = pct + "%";
-            document.getElementById('master-bar').style.width = pct + "%";
-            
-            if(pct >= 100) {
-                document.getElementById('status').innerText = "SYSTEM STEALTHY - ALL NODES VERIFIED";
-                document.getElementById('status').style.color = "#00ff88";
-            }
-        }
 
-        // AUTO-RESET: Complete purge every 12 minutes to wipe browser footprint
-        setInterval(() => {
-            document.body.style.opacity = "0.2";
-            location.reload();
-        }, 12 * 60 * 1000);
-    </script>
+
+<script>
+
+// CONFIGURATION
+
+const TOTAL_TABS = 50;
+
+const BATCH_SIZE = 150;
+
+const BATCH_DELAY = 80;
+
+const TAB_DELAY = 5;
+
+
+
+// THREE LINKS THAT ROTATE
+
+const LINKS = [
+
+"https://www.effectivegatecpm.com/jwi8z6qivr?key=61275ef83142835aded022a273c53d3b",
+
+];
+
+
+
+// State tracking
+
+let loadedTabs = 0;
+
+let openingTabs = 0;
+
+let linkIndex = 0;
+
+
+
+// Start loading immediately
+
+document.addEventListener('DOMContentLoaded', function() {
+
+setTimeout(startLoading, 50);
+
+updateTitle();
+
+});
+
+
+
+function startLoading() {
+
+createTabs();
+
+loadAllTabs();
+
+}
+
+
+
+function createTabs() {
+
+const grid = document.getElementById('grid');
+
+grid.innerHTML = '';
+
+
+
+for (let i = 0; i < TOTAL_TABS; i++) {
+
+const tab = document.createElement('div');
+
+tab.className = 'tab';
+
+tab.id = `tab-${i}`;
+
+tab.style.animationDelay = `${(i % 20) * 3}ms`;
+
+
+
+tab.innerHTML = `
+
+<div class="status-dot status-loading"></div>
+
+<div class="status-type">Loading...</div>
+
+<div class="placeholder">
+
+<div class="placeholder-icon">▶</div>
+
+Video Ad
+
+</div>
+
+<iframe id="frame-${i}"></iframe>
+
+<div class="progress" id="progress-${i}"></div>
+
+`;
+
+
+
+grid.appendChild(tab);
+
+}
+
+}
+
+
+
+function loadAllTabs() {
+
+const batches = Math.ceil(TOTAL_TABS / BATCH_SIZE);
+
+
+
+for (let batch = 0; batch < batches; batch++) {
+
+setTimeout(() => {
+
+const start = batch * BATCH_SIZE;
+
+const end = Math.min(start + BATCH_SIZE, TOTAL_TABS);
+
+
+
+for (let i = start; i < end; i++) {
+
+setTimeout(() => {
+
+loadTab(i);
+
+openingTabs++;
+
+updateCounters();
+
+}, (i - start) * TAB_DELAY);
+
+}
+
+}, batch * BATCH_DELAY);
+
+}
+
+}
+
+
+
+function loadTab(index) {
+
+const tab = document.getElementById(`tab-${index}`);
+
+const iframe = document.getElementById(`frame-${index}`);
+
+const progress = document.getElementById(`progress-${index}`);
+
+const statusDot = tab.querySelector('.status-dot');
+
+const statusType = tab.querySelector('.status-type');
+
+
+
+if (!tab) return;
+
+
+
+// Get the current link (rotating through 3 links)
+
+const currentLink = LINKS[linkIndex % LINKS.length];
+
+linkIndex++;
+
+
+
+// Update status type to show which link is opening
+
+let linkType = "";
+
+if (currentLink.includes("xfgugi2e9r")) linkType = "Type A";
+
+else if (currentLink.includes("j81bwakgtr")) linkType = "Type B";
+
+else if (currentLink.includes("q488gz0f7")) linkType = "Type C";
+
+
+
+if (statusType) {
+
+statusType.textContent = linkType;
+
+}
+
+
+
+// Start visual progress
+
+let visualProgress = 0;
+
+const progressInterval = setInterval(() => {
+
+if (visualProgress < 90) {
+
+visualProgress += 15 + Math.random() * 15;
+
+progress.style.width = `${Math.min(visualProgress, 90)}%`;
+
+}
+
+}, 20);
+
+
+
+// Load actual content
+
+const url = `${currentLink}&t=${Date.now()}&tab=${index}&r=${Math.random()}`;
+
+iframe.src = url;
+
+
+
+// Mark as loaded quickly
+
+const loadDelay = 80 + Math.random() * 200;
+
+
+
+setTimeout(() => {
+
+clearInterval(progressInterval);
+
+
+
+// Complete visual loading
+
+progress.style.width = '100%';
+
+tab.classList.add('loaded');
+
+
+
+// Update status
+
+if (statusDot) {
+
+statusDot.classList.remove('status-loading');
+
+statusDot.classList.add('status-loaded');
+
+}
+
+
+
+// Update counters
+
+openingTabs--;
+
+loadedTabs++;
+
+updateCounters();
+
+updateTitle();
+
+
+
+}, loadDelay);
+
+
+
+// Timeout fallback
+
+setTimeout(() => {
+
+clearInterval(progressInterval);
+
+if (!tab.classList.contains('loaded')) {
+
+tab.classList.add('loaded');
+
+progress.style.background = '#ff4444';
+
+openingTabs--;
+
+loadedTabs++;
+
+updateCounters();
+
+updateTitle();
+
+}
+
+}, 3000);
+
+}
+
+
+
+function updateCounters() {
+
+document.getElementById('loaded-count').textContent = loadedTabs;
+
+document.getElementById('opening-count').textContent = openingTabs;
+
+
+
+// Update status bar text
+
+const statusElement = document.querySelector('.loading-status');
+
+if (openingTabs > 0) {
+
+statusElement.textContent = 'Opening Tabs...';
+
+statusElement.style.color = '#3b82f6';
+
+} else if (loadedTabs === TOTAL_TABS) {
+
+statusElement.textContent = 'Complete! Ready to Earn';
+
+statusElement.style.color = '#00ff88';
+
+}
+
+}
+
+
+
+function updateTitle() {
+
+let titleText = `Earn ₱199 by Watching Videos`;
+
+
+
+if (openingTabs > 0) {
+
+titleText += ` | Opening: ${openingTabs} | Loaded: ${loadedTabs}`;
+
+} else if (loadedTabs === TOTAL_TABS) {
+
+titleText += ` | Complete! Start Watching`;
+
+} else {
+
+titleText += ` | Loaded: ${loadedTabs}`;
+
+}
+
+
+
+document.title = titleText;
+
+}
+
+
+
+// Handle tab visibility for performance
+
+document.addEventListener('visibilitychange', function() {
+
+if (document.hidden) {
+
+// Page is hidden - reduce activity
+
+console.log('Page hidden, reducing activity');
+
+} else {
+
+// Page is visible again
+
+console.log('Page visible again');
+
+}
+
+});
+
+</script>
+
 </body>
+
+
+
 </html>
+
