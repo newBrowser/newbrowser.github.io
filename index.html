@@ -2,9 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-<meta name="google-site-verification" content="I6mj2Xin2srj3bEdDQEZ_L0GtidF2ZxyPVZP-Q6KuzQ" />
-    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <!-- Google tag (gtag.js) -->
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-G0FJCMYEKM"></script>
@@ -29,6 +28,7 @@ gtag('config', 'G-G0FJCMYEKM');
 
 </script>
 
+
     
     <!-- Primary Meta Tags -->
     <title>Mars: The Red Planet | Facts, Images & Exploration</title>
@@ -40,17 +40,19 @@ gtag('config', 'G-G0FJCMYEKM');
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://marsexplorer.example.com/">
+    <meta property="og:url" content="https://mars225millionkm.github.io">
     <meta property="og:title" content="Mars: The Red Planet | Facts, Images & Exploration">
     <meta property="og:description" content="Explore Mars - the fourth planet from the Sun. Discover fascinating facts, high-resolution images, mission updates, and comparison with Earth.">
-    <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/0/02/OSIRIS_Mars_true_color.jpg">
+    <meta property="og:image" content="https://mars225millionkm.github.io/logo.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://marsexplorer.example.com/">
+    <meta property="twitter:url" content="https://mars225millionkm.github.io">
     <meta property="twitter:title" content="Mars: The Red Planet | Facts, Images & Exploration">
     <meta property="twitter:description" content="Explore Mars - the fourth planet from the Sun. Discover fascinating facts, high-resolution images, mission updates, and comparison with Earth.">
-    <meta property="twitter:image" content="https://upload.wikimedia.org/wikipedia/commons/0/02/OSIRIS_Mars_true_color.jpg">
+    <meta property="twitter:image" content="https://mars225millionkm.github.io/logo.png">
     
     <!-- Additional SEO Meta Tags -->
     <meta name="author" content="Mars Explorer Team">
@@ -63,7 +65,11 @@ gtag('config', 'G-G0FJCMYEKM');
     <meta name="rating" content="General">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://marsexplorer.example.com/">
+    <link rel="canonical" href="https://mars225millionkm.github.io">
+    
+    <!-- Favicon and Apple Touch Icons -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪐</text></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪐</text></svg>">
     
     <!-- Structured Data / Schema Markup for Rich Snippets -->
     <script type="application/ld+json">
@@ -71,15 +77,12 @@ gtag('config', 'G-G0FJCMYEKM');
       "@context": "https://schema.org",
       "@type": "WebSite",
       "name": "Mars Explorer",
-      "url": "https://marsexplorer.example.com/",
+      "url": "https://mars225millionkm.github.io",
       "description": "Comprehensive resource about Mars - facts, images, exploration missions, and scientific discoveries",
       "publisher": {
         "@type": "Organization",
         "name": "Mars Explorer",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://marsexplorer.example.com/logo.png"
-        }
+        "logo": "https://mars225millionkm.github.io/logo.png"
       },
       "about": {
         "@type": "Planet",
@@ -102,28 +105,22 @@ gtag('config', 'G-G0FJCMYEKM');
       "author": {
         "@type": "Organization",
         "name": "Mars Explorer",
-        "url": "https://marsexplorer.example.com/"
+        "url": "https://mars225millionkm.github.io"
       },
       "publisher": {
         "@type": "Organization",
         "name": "Mars Explorer",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://marsexplorer.example.com/logo.png"
-        }
+        "logo": "https://mars225millionkm.github.io/logo.png"
       },
       "datePublished": "2023-10-15",
       "dateModified": "2023-10-15",
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://marsexplorer.example.com/"
+        "@id": "https://mars225millionkm.github.io"
       },
       "keywords": "Mars, Red Planet, space exploration, NASA, astronomy"
     }
     </script>
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪐</text></svg>">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -179,11 +176,51 @@ gtag('config', 'G-G0FJCMYEKM');
             display: flex;
             align-items: center;
             gap: 15px;
+            text-decoration: none;
         }
         
-        .logo i {
-            font-size: 2.5rem;
-            color: #ff4d4d;
+        .logo-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff4d4d, #ff8a00);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 77, 77, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .logo-img::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(transparent, rgba(255, 255, 255, 0.1), transparent 30%);
+            animation: rotate 4s linear infinite;
+        }
+        
+        .logo-img span {
+            position: relative;
+            z-index: 1;
+            font-size: 1.5rem;
+        }
+        
+        @keyframes rotate {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        
+        .logo-text {
+            display: flex;
+            flex-direction: column;
         }
         
         .logo h1 {
@@ -193,6 +230,14 @@ gtag('config', 'G-G0FJCMYEKM');
             background-clip: text;
             color: transparent;
             text-shadow: 0 0 10px rgba(255, 77, 77, 0.3);
+            line-height: 1.1;
+        }
+        
+        .logo-tagline {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-top: 5px;
+            font-weight: 300;
         }
         
         /* Hidden but important for SEO - H1 content for search engines */
@@ -550,6 +595,16 @@ gtag('config', 'G-G0FJCMYEKM');
             .planet-icon {
                 font-size: 5rem;
             }
+            
+            .logo-img {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+            
+            .logo h1 {
+                font-size: 1.8rem;
+            }
         }
         
         @media (max-width: 480px) {
@@ -564,6 +619,24 @@ gtag('config', 'G-G0FJCMYEKM');
             .info-card {
                 padding: 20px;
             }
+            
+            .logo {
+                gap: 10px;
+            }
+            
+            .logo-img {
+                width: 45px;
+                height: 45px;
+                font-size: 1.3rem;
+            }
+            
+            .logo h1 {
+                font-size: 1.6rem;
+            }
+            
+            .logo-tagline {
+                font-size: 0.8rem;
+            }
         }
     </style>
 </head>
@@ -572,10 +645,15 @@ gtag('config', 'G-G0FJCMYEKM');
     <header>
         <div class="container">
             <div class="header-content">
-                <div class="logo">
-                    <i class="fas fa-globe-americas"></i>
-                    <h1>Mars Explorer</h1>
-                </div>
+                <a href="https://mars225millionkm.github.io" class="logo">
+                    <div class="logo-img">
+                        <span>🪐</span>
+                    </div>
+                    <div class="logo-text">
+                        <h1>The Red Planet: Mars</h1>
+                        <div class="logo-tagline">Exploring Mars - 225 Million KM Away</div>
+                    </div>
+                </a>
                 <!-- Hidden H1 for SEO with targeted keywords -->
                 <h1 class="seo-heading">Mars - The Red Planet: Complete Guide with Facts, Images, and Exploration Updates</h1>
                 <nav>
@@ -595,12 +673,16 @@ gtag('config', 'G-G0FJCMYEKM');
     <section class="hero">
         <div class="container">
             <div class="hero-content">
-                <h2>The Red Planet: Mars</h2>
-                <p><span class="keyword-highlight">Mars</span>, the fourth planet from the Sun, has fascinated humans for centuries. With its reddish appearance, polar ice caps, and potential for past life, it remains a primary target for <span class="keyword-highlight">space exploration</span>.</p>
+                <h2>Mars: The Fourth Planet</h2>
+                <p><span class="keyword-highlight">Mars</span> is the fourth planet from the Sun, orbiting at an average distance of <span class="keyword-highlight">227.9 million km (1.52 AU)</span>. A Martian year lasts <span class="keyword-highlight">687 Earth days</span>. Mars has a thin atmosphere composed primarily of carbon dioxide.</p>
                 
                 <div class="mars-image-container">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/0/02/OSIRIS_Mars_true_color.jpg" alt="Mars planet surface - The Red Planet with visible features including polar ice caps and surface markings" class="mars-image">
                     <div class="image-caption">Mars - The Red Planet as seen from the Hubble Space Telescope. Credit: NASA/ESA</div>
+                </div>
+                
+                <div style="margin-top: 40px; text-align: left; max-width: 800px; margin-left: auto; margin-right: auto;">
+                    <p><strong>Read more:</strong> Mars, often called the Red Planet, has fascinated scientists and astronomers for centuries. Its reddish appearance comes from iron oxide prevalent on its surface. The planet has polar ice caps, seasons, weather patterns, and geological features that suggest it once had flowing water.</p>
                 </div>
             </div>
         </div>
@@ -776,7 +858,15 @@ gtag('config', 'G-G0FJCMYEKM');
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>Mars Explorer</h3>
+                    <div class="logo" style="justify-content: flex-start; margin-bottom: 20px;">
+                        <div class="logo-img" style="width: 50px; height: 50px; font-size: 1.5rem;">
+                            <span>🪐</span>
+                        </div>
+                        <div class="logo-text">
+                            <h3 style="margin: 0; font-size: 1.5rem;">Mars Explorer</h3>
+                            <div class="logo-tagline">Exploring the Red Planet</div>
+                        </div>
+                    </div>
                     <p>Your comprehensive guide to the <span class="keyword-highlight">Red Planet</span>. Explore facts, images, and the latest discoveries about <span class="keyword-highlight">Mars exploration</span>.</p>
                     <div class="social-icons">
                         <a href="#" aria-label="Follow us on Twitter"><i class="fab fa-twitter"></i></a>
@@ -811,7 +901,7 @@ gtag('config', 'G-G0FJCMYEKM');
             <div class="copyright">
                 <p>&copy; 2023 Mars Explorer. All rights reserved. | Educational website about the Red Planet - Mars facts, images, and exploration information.</p>
                 <p>Mars images credit: NASA/ESA. Information sources: NASA Mars Exploration, ESA, SpaceX Mars colonization plans.</p>
-                <p>Keywords: Mars planet, Red Planet facts, Mars exploration, NASA Mars missions, Mars images, Mars colonization, space exploration</p>
+                <p>Website: <a href="https://mars225millionkm.github.io" style="color: #ff8a00;">https://mars225millionkm.github.io</a> | Keywords: Mars planet, Red Planet facts, Mars exploration, NASA Mars missions, Mars images</p>
             </div>
         </div>
     </footer>
@@ -831,6 +921,9 @@ gtag('config', 'G-G0FJCMYEKM');
                             top: targetElement.offsetTop - 80,
                             behavior: 'smooth'
                         });
+                        
+                        // Update URL without page reload
+                        history.pushState(null, null, targetId);
                     }
                 }
             });
@@ -889,22 +982,22 @@ gtag('config', 'G-G0FJCMYEKM');
                     "@type": "ListItem",
                     "position": 1,
                     "name": "Home",
-                    "item": "https://marsexplorer.example.com/"
+                    "item": "https://mars225millionkm.github.io"
                 }, {
                     "@type": "ListItem",
                     "position": 2,
                     "name": "Mars Information",
-                    "item": "https://marsexplorer.example.com/#overview"
+                    "item": "https://mars225millionkm.github.io/#overview"
                 }, {
                     "@type": "ListItem",
                     "position": 3,
                     "name": "Mars Facts",
-                    "item": "https://marsexplorer.example.com/#facts"
+                    "item": "https://mars225millionkm.github.io/#facts"
                 }, {
                     "@type": "ListItem",
                     "position": 4,
                     "name": "Mars Exploration",
-                    "item": "https://marsexplorer.example.com/#exploration"
+                    "item": "https://mars225millionkm.github.io/#exploration"
                 }]
             };
             
@@ -916,4 +1009,3 @@ gtag('config', 'G-G0FJCMYEKM');
     </script>
 </body>
 </html>
-
