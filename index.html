@@ -18,7 +18,7 @@
     <meta name="title" content="Mars: The Red Planet | Facts, NASA Missions & Mars in Hindi">
     <meta name="description" content="Explore Mars - the fourth planet from the Sun. Discover NASA Mars missions, Red Planet facts, and information about Mars in Hindi. Learn about exploration and 225 million km space travel.">
     
-    <meta name="keywords" content="Mars, mars planet, mars in hindi, Red Planet, Mars exploration, NASA Mars, Mars missions, Mars colonization, mars225millionkm, space exploration, solar system, mangal grah, mars facts in hindi, mars distance from earth, nasa perseverance rover">
+    <meta name="keywords" content="Mars, mars planet, mars in hindi, Red Planet, Mars exploration, NASA Mars, Mars missions, Mars colonization, mars225millionkm, space exploration, solar system, mangal grah, mars facts in hindi">
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://mars225millionkm.github.io/">
@@ -29,7 +29,7 @@
     <style>
         /* Base Styles */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: #0c0c1d; color: #f0f0f0; line-height: 1.6; overflow-x: hidden; }
+        body { background-color: #0c0c1d; color: #f0f0f0; line-height: 1.6; }
         .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
         
         /* Header & Logo */
@@ -48,12 +48,27 @@
         /* Content Sections */
         .section { padding: 50px 0; border-bottom: 1px solid #222; }
         h2 { color: #ff8a00; margin-bottom: 20px; font-size: 2.2rem; }
-        .keyword-box { background: rgba(255, 255, 255, 0.05); padding: 25px; border-radius: 10px; margin: 20px 0; border-left: 5px solid #ff4d4d; font-size: 1.1rem; }
         
+        /* Keyword Box - Now using normal text color */
+        .keyword-box { 
+            background: rgba(255, 255, 255, 0.05); 
+            padding: 25px; 
+            border-radius: 10px; 
+            margin: 20px 0; 
+            border-left: 5px solid #ff4d4d; 
+            font-size: 1.1rem;
+            color: #f0f0f0; /* Uniform color */
+        }
+        
+        /* Ensure all bold/highlights match the text color */
+        .highlight, strong { 
+            color: #f0f0f0; 
+            font-weight: bold; 
+        }
+
         /* Footer */
         footer { padding: 40px 0; text-align: center; background: #0a0a15; color: #777; border-top: 1px solid #222; }
-        .highlight { color: #ff4d4d; font-weight: bold; }
-        .keyword-list { font-size: 0.9rem; margin-top: 10px; color: #555; }
+        .footer-keywords { font-size: 0.85rem; margin-top: 10px; color: #444; }
     </style>
 </head>
 <body>
@@ -77,7 +92,7 @@
         <div class="container">
             <img src="https://upload.wikimedia.org/wikipedia/commons/0/02/OSIRIS_Mars_true_color.jpg" alt="NASA Mars Planet Exploration Facts" class="mars-img">
             <div class="keyword-box">
-                <p>Discover the latest <span class="highlight">NASA Mars missions</span> and unravel the mysteries of the <span class="highlight">Red Planet</span>. Our goal at <strong>mars225millionkm.github.io</strong> is to bring you professional <span class="highlight">space exploration</span> insights and <span class="highlight">Mars facts</span>.</p>
+                <p>Discover the latest <strong>NASA Mars missions</strong> and unravel the mysteries of the <strong>Red Planet</strong>. Our goal at <strong>mars225millionkm.github.io</strong> is to bring you professional <strong>space exploration</strong> insights and <strong>Mars facts</strong>.</p>
             </div>
         </div>
     </section>
@@ -101,10 +116,10 @@
             <h2>Mars Exploration Quick Stats</h2>
             <p>Key data for space enthusiasts following the <strong>mars225millionkm</strong> journey:</p>
             <ul style="list-style: none; margin-top: 15px;">
-                <li><i class="fas fa-rocket highlight"></i> <strong>Distance:</strong> Average 225 Million KM from Earth</li>
-                <li><i class="fas fa-moon highlight"></i> <strong>Moons:</strong> Phobos and Deimos</li>
-                <li><i class="fas fa-redo highlight"></i> <strong>Rotation:</strong> 24.6 hours (1 Mars day or Sol)</li>
-                <li><i class="fas fa-weight highlight"></i> <strong>Gravity:</strong> 38% of Earth's gravity</li>
+                <li><i class="fas fa-rocket" style="color: #ff4d4d;"></i> <strong>Distance:</strong> Average 225 Million KM from Earth</li>
+                <li><i class="fas fa-moon" style="color: #ff4d4d;"></i> <strong>Moons:</strong> Phobos and Deimos</li>
+                <li><i class="fas fa-redo" style="color: #ff4d4d;"></i> <strong>Rotation:</strong> 24.6 hours (1 Mars day or Sol)</li>
+                <li><i class="fas fa-weight" style="color: #ff4d4d;"></i> <strong>Gravity:</strong> 38% of Earth's gravity</li>
             </ul>
         </div>
     </section>
@@ -112,8 +127,8 @@
     <footer>
         <div class="container">
             <p>&copy; 2026 Mars Explorer - Dedicated to <strong>mars225millionkm.github.io</strong></p>
-            <div class="keyword-list">
-                Trending: Mars exploration, NASA Mars missions, Mars in Hindi, Red Planet facts, Solar System exploration.
+            <div class="footer-keywords">
+                Keywords: Mars exploration, NASA Mars missions, Mars in Hindi, Red Planet facts, Solar System exploration.
             </div>
         </div>
     </footer>
