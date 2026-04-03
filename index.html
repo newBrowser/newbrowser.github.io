@@ -1,105 +1,136 @@
-from seleniumbase import SB
-import random
-import time
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-# --- CONFIGURATION ---
-TARGET_URL = "https://mars225millionkm.github.io"
-SITE_NAME = "mars225millionkm.github.io" 
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-G0FJCMYEKM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-G0FJCMYEKM');
+    </script>
 
-# NEW KEYWORDS (Replaced old ones completely)
-KEYWORDS = [
-    "astroflux", "nebulyx", "cosmonex", "voidrix", "quasyn", 
-    "orbix", "kryon", "zenox", "vortyx", "aexor"
-]
+    <link rel="icon" type="image/png" href="favicon2.png">
 
-USER_AGENTS = [
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36",
-    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/119.0"
-]
-
-RESOLUTIONS = [(1920, 1080), (1366, 768), (1536, 864), (1440, 900)]
-
-class GSC_Agent:
-    def __init__(self, sb):
-        self.sb = sb
-
-    def click_website_only(self):
-        result_link = f'#search a[href*="{SITE_NAME}"]'
-        
-        for _ in range(5):
-            if self.sb.is_element_visible(result_link):
-                print(f"🎯 Link found for {SITE_NAME}. Clicking...")
-                self.sb.scroll_to(result_link)
-                time.sleep(random.uniform(1.5, 3.0))
-                
-                try:
-                    self.sb.hover(result_link)
-                    time.sleep(0.5)
-                    self.sb.execute_script(f"document.querySelector('#search a[href*=\"{SITE_NAME}\"]').click();")
-                except:
-                    self.sb.click(result_link)
-                
-                time.sleep(8)
-                if SITE_NAME in self.sb.get_current_url():
-                    print("🚀 Success! Landed on site.")
-                    return True
-            
-            self.sb.execute_script(f"window.scrollBy(0, {random.randint(400, 700)});")
-            time.sleep(2)
-        return False
-
-    def perform_search(self, query):
-        self.sb.uc_open_with_reconnect("https://www.google.com", 5)
-        
-        search_box = 'textarea[name="q"]' if self.sb.is_element_visible('textarea[name="q"]') else 'input[name="q"]'
-        
-        if self.sb.is_element_visible(search_box):
-            print(f"🔍 Searching NEW Keyword: {query}")
-            for char in query:
-                self.sb.add_text(search_box, char)
-                time.sleep(random.uniform(0.05, 0.25))
-            self.sb.add_text(search_box, "\n")
-            time.sleep(random.randint(5, 8))
-
-    def engage(self):
-        duration = random.randint(60, 120) # Increased stay time for new keywords
-        print(f"⏱️ Staying for {duration}s...")
-        start = time.time()
-        while time.time() - start < duration:
-            self.sb.execute_script(f"window.scrollBy(0, {random.randint(200, 600)});")
-            time.sleep(random.randint(5, 15))
-
-def run_session(i):
-    query = random.choice(KEYWORDS)
-    ua = random.choice(USER_AGENTS)
-    res = random.choice(RESOLUTIONS)
+    <title>Mars: The Red Planet | Facts, NASA Missions & Mars in Hindi</title>
+    <meta name="title" content="Mars: The Red Planet | Facts, NASA Missions & Mars in Hindi">
+    <meta name="description" content="Explore Mars - the fourth planet from the Sun. Discover NASA Mars missions, Red Planet facts, and information about Mars in Hindi. Learn about exploration and 225 million km space travel.">
     
-    print(f"\n--- SESSION {i} ---")
-    print(f"Keyword: {query} | Resolution: {res[0]}x{res[1]}")
-    
-    with SB(uc=True, test=True, agent=ua, incognito=True) as sb:
-        sb.set_window_size(res[0], res[1])
-        agent = GSC_Agent(sb)
-        agent.perform_search(query)
-        
-        success = agent.click_website_only()
-        
-        # If the new keyword doesn't show your site yet, use site: search to force it
-        if not success:
-            print(f"⏭️ Keyword '{query}' not ranking yet. Using site: search...")
-            sb.open(f"https://www.google.com/search?q={query}+site:{SITE_NAME}")
-            success = agent.click_website_only()
-        
-        if success:
-            agent.engage()
-            print(f"✅ Session {i} Complete.")
+    <meta name="keywords" content="Mars, mars planet, mars in hindi, Red Planet, astroflux, nebulyx, cosmonex, voidrix, quasyn, orbix, kryon, zenox, vortyx, aexor, mars225millionkm">
 
-if __name__ == "__main__":
-    for i in range(1, 6): # Start with small batches for new keywords
-        try:
-            run_session(i)
-            time.sleep(random.randint(60, 120))
-        except Exception as e:
-            print(f"⚠️ Error: {e}")
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mars225millionkm.github.io/">
+    <meta property="og:title" content="Mars: The Red Planet | Facts & Exploration">
+    <meta property="og:description" content="Complete guide to the Red Planet. Facts about NASA Mars missions and space exploration at mars225millionkm.">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Base Styles */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #0c0c1d; color: #f0f0f0; line-height: 1.6; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        
+        /* Header & Logo */
+        header { background: linear-gradient(to right, #1a0a1f, #3a0a2a); padding: 40px 0; text-align: center; border-bottom: 2px solid #ff4d4d; }
+        .logo h1 { font-size: 2.5rem; background: linear-gradient(to right, #ff8a00, #ff4d4d); -webkit-background-clip: text; color: transparent; font-weight: 800; }
+        
+        /* Navigation */
+        nav { margin-top: 20px; }
+        nav a { color: #ccc; text-decoration: none; margin: 0 15px; font-weight: bold; transition: 0.3s; }
+        nav a:hover { color: #ff8a00; }
+
+        /* Hero Image */
+        .hero { padding: 60px 0; text-align: center; }
+        .mars-img { width: 100%; max-width: 800px; border-radius: 15px; border: 4px solid #3a0a2a; box-shadow: 0 0 30px rgba(255, 77, 77, 0.3); }
+
+        /* Content Sections */
+        .section { padding: 50px 0; border-bottom: 1px solid #222; }
+        h2 { color: #ff8a00; margin-bottom: 20px; font-size: 2.2rem; }
+        
+        /* Keyword Box */
+        .keyword-box { 
+            background: rgba(255, 255, 255, 0.05); 
+            padding: 25px; 
+            border-radius: 10px; 
+            margin: 20px 0; 
+            border-left: 5px solid #ff4d4d; 
+            font-size: 1.1rem;
+            color: #f0f0f0;
+        }
+        
+        .highlight, strong { 
+            color: #f0f0f0; 
+            font-weight: bold; 
+        }
+
+        /* Footer */
+        footer { padding: 40px 0; text-align: center; background: #0a0a15; color: #777; border-top: 1px solid #222; }
+        .footer-keywords { font-size: 0.85rem; margin-top: 10px; color: #444; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Mars: The Red Planet</h1>
+                <p>Journey across <strong>225 million km</strong> with <strong>Mars Explorer</strong></p>
+            </div>
+            <nav>
+                <a href="#about">Red Planet Facts</a>
+                <a href="#nasa">NASA Space Missions</a>
+                <a href="#hindi">Mars in Hindi</a>
+                <a href="#stats">Exploration Stats</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/02/OSIRIS_Mars_true_color.jpg" alt="Scientific NASA Mars Planet Exploration" class="mars-img">
+            <div class="keyword-box">
+                <p>Analyze the most recent <strong>NASA Mars missions</strong> and discover new secrets of the <strong>Red Planet</strong>. Explore our unique data streams: <strong>astroflux</strong>, <strong>nebulyx</strong>, and <strong>cosmonex</strong>. At <strong>mars225millionkm.github.io</strong>, we provide in-depth insights into <strong>voidrix</strong> and <strong>quasyn</strong> anomalies.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="section">
+        <div class="container">
+            <h2>Red Planet Overview</h2>
+            <p>Our neighbor, <strong>Mars</strong>, is the fourth planet from the Sun. Often described as the <strong>Red Planet</strong>, it remains a top priority for <strong>NASA Mars</strong> programs. Using <strong>orbix</strong> and <strong>kryon</strong> technology, we can now track surface changes more accurately than ever before.</p>
+        </div>
+    </section>
+
+    <section id="hindi" class="section">
+        <div class="container">
+            <h2>Mars in Hindi (मंगल ग्रह की जानकारी)</h2>
+            <p>भारतीय खगोल विज्ञान में इसे "मंगल ग्रह" (<strong>Mars in Hindi</strong>) कहा जाता है. <strong>NASA Mars</strong> के नवीनतम रोवर्स ने <strong>zenox</strong> और <strong>vortyx</strong> क्षेत्रों में प्राचीन झीलों के निशान खोजे हैं. मंगल ग्रह के <strong>aexor</strong> रहस्यों को समझने के लिए हमारी वेबसाइट से जुड़े रहें।</p>
+        </div>
+    </section>
+
+    <section id="stats" class="section">
+        <div class="container">
+            <h2>Space Exploration Quick Stats</h2>
+            <p>Current telemetry for followers of the <strong>mars225millionkm</strong> project:</p>
+            <ul style="list-style: none; margin-top: 15px;">
+                <li><i class="fas fa-rocket" style="color: #ff4d4d;"></i> <strong>Distance:</strong> Roughly 225 Million KM from Earth</li>
+                <li><i class="fas fa-moon" style="color: #ff4d4d;"></i> <strong>Natural Satellites:</strong> Two Moons (Phobos and Deimos)</li>
+                <li><i class="fas fa-redo" style="color: #ff4d4d;"></i> <strong>Day Length:</strong> 24.6 Earth Hours (1 Sol)</li>
+                <li><i class="fas fa-weight" style="color: #ff4d4d;"></i> <strong>Surface Gravity:</strong> 38% compared to Earth</li>
+            </ul>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Mars Explorer - Monitoring <strong>mars225millionkm.github.io</strong></p>
+            <div class="footer-keywords">
+                Topics: astroflux, nebulyx, cosmonex, voidrix, quasyn, orbix, kryon, zenox, vortyx, aexor.
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
